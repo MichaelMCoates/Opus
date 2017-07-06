@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Opus</title>
+  <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous">
+  </script>
+  <script type="text/javascript">
+    const url = 'https://api.spotify.com/v1/search?type=artist&q=kanye';
+    $.ajax(url).then(
+        (data) => console.log(data),
+        () => {
+          console.error('Request is not allowed! Using the CORS hack instead:');
+          $.ajax('/cors', { data: { url } }).then(
+            response => {console.log(response)},
+            (err) => console.error(err)
+          );
+        }
+      );
+  </script>
+</head>
+<body>
+  <h1>Cross-Origin Resource Sharing</h1>
+   <p>Open the console to see the output of this code:</p>
+
+   <pre><code>
+ const url = 'https://api.spotify.com/v1/users/jmperezperez';
+
+ $.ajax(url).then(
+   (data) => console.log(data),
+   () => {
+     console.error('Request is not allowed! Using the CORS hack instead:');
+     $.ajax('/cors', { data: { url } }).then(
+       data => console.log(data),
+       (err) => console.error(err)
+     );
+   }
+ );
+   </code></pre>
+ </body>
+</html>
