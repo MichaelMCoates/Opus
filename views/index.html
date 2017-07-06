@@ -9,16 +9,11 @@
   </script>
   <script type="text/javascript">
     const url = 'https://api.spotify.com/v1/search?type=artist&q=kanye';
-    $.ajax(url).then(
-        (data) => console.log(data),
-        () => {
-          console.error('Request is not allowed! Using the CORS hack instead:');
+
           $.ajax('/cors', { data: { url } }).then(
             response => {console.log(response)},
             (err) => console.error(err)
           );
-        }
-      );
   </script>
 </head>
 <body>
