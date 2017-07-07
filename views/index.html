@@ -32,27 +32,32 @@
   </script>
 
   <script type="text/javascript">
+
+    function start () {
+      getKanye();
+      getKanyeFriends();
+    }
     function fetchKanyeSearch() {
       let myUrl = 'https://api.spotify.com/v1/search?query=kanye&type=artist&offset=0&limit=20';
-      PingSpotifyAPIAJAX(myUrl);
+      utilReceiveSearch(myUrl);
     }
 
     function getKanye() {
       let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x';
-      PingSpotifyAPIAJAX(myUrl);
+      utilReceiveArtist(myUrl);
     }
 
     function getKanyeFriends() {
       let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x/related-artists';
-      PingSpotifyAPIAJAX(myUrl);
+      utilReceiveRelatedArtists(myUrl);
     }
 
-    function PingSpotifyAPIAJAX(url) {
-      $.ajax('/cors', { data: { url } }).then(
-        response => {console.log(response)},
-        (err) => console.error(err)
-      )
-    }
+    // function PingSpotifyAPIAJAX(url) {
+    //   $.ajax('/cors', { data: { url } }).then(
+    //     response => {console.log(response)},
+    //     (err) => console.error(err)
+    //   )
+    // }
 
     $('#fetchKanyeSearch').click(fetchKanyeSearch)
     $('#getKanye').click(getKanye)
@@ -61,85 +66,293 @@
 
   <script src="https://d3js.org/d3.v4.min.js"></script>
 
+
   <script type="text/javascript">
+  let ALL_NODES = [];
+  let ALL_LINKS = [];
+
+  function searchNode(id){
+    for (var i=0; i < ALL_NODES.length; i++) {
+        if (ALL_NODES[i].id === id) {
+            return ALL_NODES[i];
+        }
+    }
+}
+
+    function PingSpotifyAPIAJAX(url) {
+      return $.ajax('/cors', { data: { url } });
+    }
+
     var svg = d3.select("svg");
       var width = +svg.attr("width");
       var height = +svg.attr("height");
 
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+    var simulation = d3.forceSimulation()
+        .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(200))
+        .force("charge", d3.forceManyBody())
+        .force("center", d3.forceCenter(width / 2, height / 2));
+
+        function dragstarted(d) {
+          if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+          d.fx = d.x;
+          d.fy = d.y;
+        }
+
+        function dragged(d) {
+          d.fx = d3.event.x;
+          d.fy = d3.event.y;
+        }
+
+        function dragended(d) {
+          if (!d3.event.active) simulation.alphaTarget(0);
+          d.fx = null;
+          d.fy = null;
+        }
+
+    function utilReceiveArtist(url) {
+      PingSpotifyAPIAJAX(url).then((response) => receiveArtist(response));
+    }
+
+    function receiveArtist(response) {
+      response.x = width / 2;
+      response.y = width / 2;
+      ALL_NODES.push(response);
+      let artistResponse = [response]
+      let id = response.id;
+
+      var gnodes = svg.selectAll('g.chosen')
+        .data(artistResponse, function (d) { return d.id; }) // to join the data, for transitions
+        .enter()
+        .append('g')
+        .classed('gnode', true)
+        .classed('chosen', true)
+        .classed(`${id}`, true)
+
+      var node = gnodes.append("circle")
+          .attr("r", 7)
+          .attr("fill", function(d) { return color(1); } )
+          .attr("x", function(d) { return width/2; })
+          .attr("y", function(d) { return height/2; })
+          .call(d3.drag()
+              .on("start", dragstarted)
+              .on("drag", dragged)
+              .on("end", dragended));
 
 
-    var particlesDepthBlur = function() {
-      return Math.random();
-    };
+        var label = gnodes.append("text")
+          .text(function(d, i) { return d.name; })
+          .attr('class', 'mytext')
+          .attr("dy", ".35em")
+          .attr("text-anchor", function(d) {
+            return "start";
+          })
+          .style("fill", "#555")
+          .style("font-family", "Arial")
+          .style("font-size", 12)
 
+        simulation
+            .nodes(artistResponse)
+            .on("tick", ticked);
 
-    function PingSpotifyAPIAJAX(url) {
-      $.ajax('/cors', { data: { url } }).then(
-        response => {
-          console.log(response)
-          console.log(url)
-          let responseData;
-          if (response.artists && response.artists.items) {
-            responseData = response.artists.items;
-          } else if (response.artists) {
-            responseData = response.artists;
-          } else {
-            responseData = [response];
-          }
+        simulation.force("link")
+          .links(ALL_LINKS)
 
-          // var link = svg.append("g")
-          //     .attr("class", "links")
-          //     .selectAll("line")
-          //     .data(graph.links)
-          //     .enter().append("line")
-          //     .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
-
-
-          var gnodes = svg.selectAll('g.gnode')
-            .data(responseData, function (d) { return d.id; }) // to join the data, for transitions
-            .enter()
-            .append('g')
-            .classed('gnode', true)
-
-          var node = gnodes.append("circle")
-              .attr("r", 7)
-              .attr("fill", 'black' )
-              .attr("cx", function() { return Math.random() * 720; })
-              .attr("cy", function() { return Math.random() * 720; })
-              // .call(d3.drag()
-              //     .on("start", dragstarted)
-              //     .on("drag", dragged)
-              //     .on("end", dragended));
-
-
-            var label = gnodes.append("text")
-                .text(function(d, i) { return d.name; })
-                .attr('class', 'mytext')
-                //  .attr("dy", ".35em")
-                .attr("text-anchor", function(d) {
-                  return "start";
+          function ticked() {
+            node
+                .attr("cx", function(d) { return d.x; })
+                .attr("cy", function(d) { return d.y; });
+            label
+                .attr("x", function(d) { //<-- NEED TO POSITION THESE TOO
+                  return d.x;
                 })
-                .style("fill", "#555")
-                .style("font-family", "Arial")
-                .style("font-size", 12)
-                .attr("x", function() { return Math.random() * 720; })
-                .attr("y", function() { return Math.random() * 720; })
+                .attr("y", function(d) {
+                  return d.y;
+                });
+            }
+    }
 
-            // .call(d3.drag()
-            //   .on("start", dragstarted)
-            //   .on("drag", dragged)
-            //   .on("end", dragended));
+    function utilReceiveRelatedArtists(url) {
+      PingSpotifyAPIAJAX(url).then((response) => receiveRelatedArtists(response, url));
+    }
 
-            // node.append("title")
-            //     .text(function(d) { return d.id; });
+    function receiveRelatedArtists(response, url) {
+      response.artists.forEach((artist) => {
+        artist.x = width / 2;
+        artist.y = width / 2;
+        ALL_NODES.push(artist);
+      });
 
-        },
-        (err) => console.error(err)
-      )
+      let newUrl = url.slice(35, 57)
+
+      var relatedLinks = $.map(response.artists, function(d) {
+        return {
+          "source": d.id, "target": newUrl, "value": 6, "origin": d
+        };
+      });
+
+      relatedLinks.forEach((link) => {ALL_LINKS.push(link)})
+
+      d3.select("svg").selectAll("*").remove();
+
+      var link = svg.append("g")
+          .attr("class", "links")
+        .selectAll("line")
+        .data(ALL_LINKS)
+        .enter().append("line")
+          .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+      var gnodes = svg.selectAll('g.gnode')
+        .data(ALL_NODES, function(d){ return d.id;})
+        .enter()
+        .append('g')
+        .classed('gnode', true)
+
+      var node = gnodes.append("circle")
+          .attr("r", 15)
+          .attr("fill", function(d) { return color(2); })
+          .attr("x", function(d) { return width/2; })
+          .attr("y", function(d) { return height/2; })
+          .call(d3.drag()
+              .on("start", dragstarted)
+              .on("drag", dragged)
+              .on("end", dragended));
+
+
+        var label = gnodes.append("text")
+          .text(function(d, i) { return d.name; })
+          .attr('class', 'mytext')
+           .attr("dy", ".35em")
+          .attr("text-anchor", function(d) {
+            return "start";
+          })
+          .style("fill", "#555")
+          .style("font-family", "Arial")
+          .style("font-size", 12)
+
+          simulation
+              .nodes(ALL_NODES)
+              .on("tick", ticked);
+
+          simulation.force("link")
+              .links(ALL_LINKS);
+
+          function ticked() {
+            link
+                .attr("x1", function(d) { return d.source.x; })
+                .attr("y1", function(d) { return d.source.y; })
+                .attr("x2", function(d) { return d.target.x; })
+                .attr("y2", function(d) { return d.target.y; });
+            node
+                .attr("cx", function(d) { return d.x; })
+                .attr("cy", function(d) { return d.y; });
+            label
+                .attr("x", function(d) { //<-- NEED TO POSITION THESE TOO
+                  return d.x;
+                })
+                .attr("y", function(d) {
+                  return d.y;
+                });
+            }
+    }
+
+    function utilReceiveSearch(url) {
+      PingSpotifyAPIAJAX(url).then((response) => receiveSearch(response));
+    }
+
+    function receiveSearch(response) {
+      console.log(response);
+
+      var gnodes = svg.selectAll('g.gnode')
+        .data(response.artists.items, function (d) { return d.id; }) // to join the data, for transitions
+        .enter()
+        .append('g')
+        .classed('gnode', true)
+
+      var node = gnodes.append("circle")
+          .attr("r", 7)
+          .attr("fill", function(d) { return color(3); } )
+          .attr("cx", function() { return Math.random() * 720; })
+          .attr("cy", function() { return Math.random() * 720; })
+          // .call(d3.drag()
+          //     .on("start", dragstarted)
+          //     .on("drag", dragged)
+          //     .on("end", dragended));
+
+
+        var label = gnodes.append("text")
+          .text(function(d, i) { return d.name; })
+          .attr('class', 'mytext')
+          //  .attr("dy", ".35em")
+          // .attr("text-anchor", function(d) {
+          //   return "start";
+          // })
+          .style("fill", "#555")
+          .style("font-family", "Arial")
+          .style("font-size", 12)
+          .attr("x", function() { return Math.random() * 720; })
+          .attr("y", function() { return Math.random() * 720; })
     }
 
 
 
+    //       console.log(response)
+    //       console.log(url)
+    //       let artistResponse;
+    //       if (response.artists && response.artists.items) {
+    //         responseData = response.artists.items;
+    //       } else if (response.artists) {
+    //         responseData = response.artists;
+    //       } else {
+    //         responseData = [response];
+    //       }
+    //
+    //       // var link = svg.append("g")
+    //       //     .attr("class", "links")
+    //       //     .selectAll("line")
+    //       //     .data(graph.links)
+    //       //     .enter().append("line")
+    //       //     .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+    //
+    //
+    //       var gnodes = svg.selectAll('g.gnode')
+    //         .data(responseData, function (d) { return d.id; }) // to join the data, for transitions
+    //         .enter()
+    //         .append('g')
+    //         .classed('gnode', true)
+    //
+    //       var node = gnodes.append("circle")
+    //           .attr("r", 7)
+    //           .attr("fill", 'black' )
+    //           .attr("cx", function() { return Math.random() * 720; })
+    //           .attr("cy", function() { return Math.random() * 720; })
+    //           // .call(d3.drag()
+    //           //     .on("start", dragstarted)
+    //           //     .on("drag", dragged)
+    //           //     .on("end", dragended));
+    //
+    //
+    //         var label = gnodes.append("text")
+    //             .text(function(d, i) { return d.name; })
+    //             .attr('class', 'mytext')
+    //             //  .attr("dy", ".35em")
+    //             .attr("text-anchor", function(d) {
+    //               return "start";
+    //             })
+    //             .style("fill", "#555")
+    //             .style("font-family", "Arial")
+    //             .style("font-size", 12)
+    //             .attr("x", function() { return Math.random() * 720; })
+    //             .attr("y", function() { return Math.random() * 720; })
+    //
+    //     },
+    //     (err) => console.error(err)
+    //   )
+    // }
+    //
+
+    start();
   </script>
 
 </footer>
