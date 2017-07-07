@@ -71,20 +71,40 @@
         response => {
           console.log(response)
 
-            // var link = svg.append("g")
-            //     .attr("class", "links")
-            //   .selectAll("line")
-            //   .data(graph.links)
-            //   .enter().append("line")
-            //     .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+          // var link = svg.append("g")
+          //     .attr("class", "links")
+          //     .selectAll("line")
+          //     .data(graph.links)
+          //     .enter().append("line")
+          //     .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
-            var node = svg.append("g")
-            .attr("class", "nodes")
-            .selectAll("circle")
+
+          var gnodes = svg.selectAll('g.gnode')
             .data(response.artists)
-            .enter().append("circle")
-            .attr("r", 10)
-            .attr("fill", 'black')
+            .enter()
+            .append('g')
+            .classed('gnode', true);
+
+          var node = gnodes.append("circle")
+              .attr("r", 7)
+              .attr("fill", 'black' )
+              // .call(d3.drag()
+              //     .on("start", dragstarted)
+              //     .on("drag", dragged)
+              //     .on("end", dragended));
+
+
+            var label = gnodes.append("text")
+                .text(function(d, i) { return d.name; })
+                .attr('class', 'mytext')
+                //  .attr("dy", ".35em")
+                // .attr("text-anchor", function(d) {
+                //   return "start";
+                // })
+                .style("fill", "#555")
+                .style("font-family", "Arial")
+                .style("font-size", 12);
+
             // .call(d3.drag()
             //   .on("start", dragstarted)
             //   .on("drag", dragged)
