@@ -34,17 +34,17 @@
   <script type="text/javascript">
     function fetchKanyeSearch() {
       let myUrl = 'https://api.spotify.com/v1/search?query=kanye&type=artist&offset=0&limit=20';
-      PingSpotifyAPI(myUrl);
+      PingSpotifyAPIAJAX(myUrl);
     }
 
     function getKanye() {
       let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x';
-      PingSpotifyAPI(myUrl);
+      PingSpotifyAPIAJAX(myUrl);
     }
 
     function getKanyeFriends() {
       let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x/related-artists';
-      PingSpotifyAPI(myUrl);
+      PingSpotifyAPIAJAX(myUrl);
     }
 
     function PingSpotifyAPIAJAX(url) {
@@ -62,45 +62,42 @@
   <script src="https://d3js.org/d3.v4.min.js"></script>
 
   <script type="text/javascript">
-    var svg = d3.select("svg"),
-      width = +svg.attr("width"),
-      height = +svg.attr("height");
+    var svg = d3.select("svg");
+      var width = +svg.attr("width");
+      var height = +svg.attr("height");
 
-      // d3.json("miserables.json", function(error, graph)
-    function PingSpotifyAPI(url) {
-      return (
-        d3.request('/cors')
-        .mimeType("application/json")
-        .response(function(xhr) { return JSON.parse(xhr.responseText); })
-        .get({url: url}, function(error, spotify) {
-          console.log(spotify);
-          if (error) throw error;
+    function PingSpotifyAPIAJAX(url) {
+      $.ajax('/cors', { data: { url } }).then(
+        response => {
+          console.log(response)
 
-          // var link = svg.append("g")
-          //     .attr("class", "links")
-          //   .selectAll("line")
-          //   .data(graph.links)
-          //   .enter().append("line")
-          //     .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+            // var link = svg.append("g")
+            //     .attr("class", "links")
+            //   .selectAll("line")
+            //   .data(graph.links)
+            //   .enter().append("line")
+            //     .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
 
-          var node = svg.append("g")
-          .attr("class", "nodes")
-          .selectAll("circle")
-          .data(graph.nodes)
-          .enter().append("circle")
-          .attr("r", 5)
-          .attr("fill", function(d) { return color(d.group); })
-          .call(d3.drag()
-          .on("start", dragstarted)
-          .on("drag", dragged)
-          .on("end", dragended));
+            var node = svg.append("g")
+            .attr("class", "nodes")
+            .selectAll("circle")
+            .data(response.artists)
+            .enter().append("circle")
+            .attr("r", 10)
+            .attr("fill", 'black')
+            // .call(d3.drag()
+            //   .on("start", dragstarted)
+            //   .on("drag", dragged)
+            //   .on("end", dragended));
 
-          // node.append("title")
-          //     .text(function(d) { return d.id; });
+            // node.append("title")
+            //     .text(function(d) { return d.id; });
 
-        })
+        },
+        (err) => console.error(err)
       )
     }
+
 
 
   </script>
