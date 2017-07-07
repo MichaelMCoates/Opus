@@ -2,15 +2,6 @@
 <html>
 <head>
   <title>Opus</title>
-  <script type="text/javascript">
-    // const url = 'https://api.spotify.com/v1/search?type=artist&q=kanye';
-    //
-    //       $.ajax('/cors', { data: { url } }).then(
-    //         response => {console.log(response)},
-    //         (err) => console.error(err)
-    //       );
-  </script>
-
   <style>
 
   .links line {
@@ -26,8 +17,93 @@
   </style>
 </head>
 <body>
-
+  <button id="getKanye">Get Kanye</button>
+  <button id="getKanyeFriends">Get Kanye's Friends</button>
+  <button id="fetchKanyeSearch">Find Kanyes with Search</button>
   <svg width="960" height="600"></svg>
 
  </body>
+
+<footer>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous">
+  </script>
+
+  <script type="text/javascript">
+    function fetchKanyeSearch() {
+      let myUrl = 'https://api.spotify.com/v1/search?query=kanye&type=artist&offset=0&limit=20';
+      PingSpotifyAPI(myUrl);
+    }
+
+    function getKanye() {
+      let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x';
+      PingSpotifyAPI(myUrl);
+    }
+
+    function getKanyeFriends() {
+      let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x/related-artists';
+      PingSpotifyAPI(myUrl);
+    }
+
+    function PingSpotifyAPIAJAX(url) {
+      $.ajax('/cors', { data: { url } }).then(
+        response => {console.log(response)},
+        (err) => console.error(err)
+      )
+    }
+
+    $('#fetchKanyeSearch').click(fetchKanyeSearch)
+    $('#getKanye').click(getKanye)
+    $('#getKanyeFriends').click(getKanyeFriends)
+  </script>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+
+  <script type="text/javascript">
+    var svg = d3.select("svg"),
+      width = +svg.attr("width"),
+      height = +svg.attr("height");
+
+      // d3.json("miserables.json", function(error, graph)
+    function PingSpotifyAPI(url) {
+      return (
+        d3.request('/cors')
+        .mimeType("application/json")
+        .response(function(xhr) { return JSON.parse(xhr.responseText); })
+        .get({url: url}, function(error, spotify) {
+          console.log(spotify);
+          if (error) throw error;
+
+          // var link = svg.append("g")
+          //     .attr("class", "links")
+          //   .selectAll("line")
+          //   .data(graph.links)
+          //   .enter().append("line")
+          //     .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+          var node = svg.append("g")
+          .attr("class", "nodes")
+          .selectAll("circle")
+          .data(graph.nodes)
+          .enter().append("circle")
+          .attr("r", 5)
+          .attr("fill", function(d) { return color(d.group); })
+          .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended));
+
+          // node.append("title")
+          //     .text(function(d) { return d.id; });
+
+        })
+      )
+    }
+
+
+  </script>
+
+</footer>
 </html>
