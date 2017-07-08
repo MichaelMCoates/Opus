@@ -44,18 +44,18 @@
     // }
 
     function getKanye() {
-      let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x';
-      utilReceiveArtist(myUrl);
+      let id = '5K4W6rqBFWDnAN6FQUkS6x';
+      utilReceiveArtist(id);
     }
 
     function getJay() {
-      let myUrl = 'https://api.spotify.com/v1/artists/3nFkdlSjzX9mRTtwJOzDYB';
-      utilReceiveArtist(myUrl);
+      let id = '3nFkdlSjzX9mRTtwJOzDYB';
+      utilReceiveArtist(id);
     }
 
     function getKanyeFriends() {
-      let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x/related-artists?&limit=5';
-      utilReceiveRelatedArtists(myUrl);
+      let id = '5K4W6rqBFWDnAN6FQUkS6x';
+      utilReceiveRelatedArtists(id);
     }
 
     // function PingSpotifyAPIAJAX(url) {
@@ -95,19 +95,37 @@
       height = +svg.attr("height"),
       color = d3.scaleOrdinal(d3.schemeCategory20);
 
+
+    svg.append("rect")
+        // .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+        .attr("width", width)
+        .attr("height", height)
+        .style("fill", "none")
+        .style("pointer-events", "all")
+        .call(d3.zoom()
+            .on("zoom", zoomed));
+
+    function zoomed() {
+      g.attr("transform", d3.event.transform);
+    }
+
     var simulation = d3.forceSimulation()
-      .force("collide", d3.forceCollide(25).iterations(4))
-      .force("charge", d3.forceManyBody().strength(-200))
-      .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(100).strength(10))
-      .force("x", d3.forceX())
-      .force("y", d3.forceY())
+      // .force("collision", d3.forceCollide(25).radius(10))
+      .force("charge", d3.forceManyBody().strength(-20000).distanceMin(400))
+      .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(300).strength(3).iterations(4))
+      .force("center", d3.forceCenter(0, 0))
+      .alphaDecay(0.003)
+      .alpha(0.2)
+
+      // .alpha(1.4)
       .on("tick", ticked);
 
+      // .alpha(10)
+      // .force("collide", d3.forceCollide(25).iterations(4))
 
-      // .force("center", d3.forceCenter(width / 2, height / 2));
 
     function dragstarted(d) {
-      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      if (!d3.event.active) simulation.alphaTarget(0.2).restart();
       d.fx = d.x;
       d.fy = d.y;
     }
@@ -123,7 +141,8 @@
       d.fy = null;
     }
 
-    var g = svg.append("g").attr("transform", "translate(" + width / 2 + "," + height / 2 + ")"),
+
+    var g = svg.append("g"),
       link = g.append("g").attr("stroke", "#000").attr("stroke-width", 1.5).selectAll(".link"),
       node = g.append("g").attr("stroke", "#fff").attr("stroke-width", 1.5).selectAll(".node"),
       text = g.append("g").selectAll(".text");
@@ -134,14 +153,16 @@
       return $.ajax('/cors', { data: { url } });
     }
 
-    function utilReceiveArtist(url) {
-      PingSpotifyAPIAJAX(url).then((response) => addParentNode(response));
+    function utilReceiveArtist(id) {
+      let url = `https://api.spotify.com/v1/artists/${id}`
+      PingSpotifyAPIAJAX(url).then((response) => addParentNode(response)).then(() => utilReceiveRelatedArtists(id));
     }
 
     function addParentNode(response) {
-      if (!NODES_OBJ[`${response.id}`]) {
+      // if (!NODES_OBJ[`${response.id}`]) {
+        response['chosen'] = true;
         NODES_OBJ[`${response.id}`] = response;
-      }
+      // }
       CHOSEN_ARR.forEach((chosen) => {
         let linkKey = `${response.id}-${chosen.id}`;
         LINKS_OBJ[`${linkKey}`] = { "source": `${response.id}`, "target": `${chosen.id}`, "value": 6, };
@@ -151,18 +172,18 @@
       update();
     }
 
-    function utilReceiveRelatedArtists(url) {
-      PingSpotifyAPIAJAX(url).then((response) => addRelativeNodes(response, url));
+    function utilReceiveRelatedArtists(id) {
+      let url = `https://api.spotify.com/v1/artists/${id}/related-artists`
+      PingSpotifyAPIAJAX(url).then((response) => addRelativeNodes(response, id));
     }
 
-    function addRelativeNodes(response, url) {
-      artists = response.artists.slice(0, 4);
-      console.log(artists);
+    function addRelativeNodes(response, parentId) {
+      artists = [response.artists[0]].concat(response.artists.slice(3, 6));
+      // console.log(artists);
       artists.forEach((artist) => {
         if (!NODES_OBJ[`${artist.id}`]) {
           NODES_OBJ[`${artist.id}`] = artist;
         }
-        let parentId = url.slice(35, 57)
         let linkKey = `${artist.id}-${parentId}`;
         LINKS_OBJ[`${linkKey}`] = { "source": `${artist.id}`, "target": `${parentId}`, "value": 6, };
       });
@@ -179,19 +200,26 @@
       node = node.enter()
         .append("circle")
         .attr('class', 'node')
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
         .attr("r", 7)
-        .on('click', (d) => utilReceiveRelatedArtists(`https://api.spotify.com/v1/artists/${d.id}/related-artists`))
+        .on('click', (d) => utilReceiveRelatedArtists(`${d.id}`))
         .call(d3.drag()
           .on("start", dragstarted)
           .on("drag", dragged)
           .on("end", dragended))
         .merge(node);
 
+      node.filter(function(d, i) { return d.chosen } )
+        .attr('fill', function(d) {return color(2)})
+        // .attr('fx', function(d, i) { return i * 50 })
+        // .attr('fy', function(d, i) { return i * 50 });
+
       text = text.data(nodesArray, function(d) { return d.id; } );
       text.exit().remove();
       text = text.enter()
         .append("text")
         .attr('class', 'text')
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
         .attr("dx", 12)
         .attr("dy", ".35em")
         .text(function(d) { return d.name })
@@ -203,15 +231,16 @@
       link = link.enter()
         .append("line")
         .attr('class', 'link')
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
         .attr("fill", function(d) { return color(2); })
         .merge(link);
 
-      console.log(node);
-      console.log(link);
-      console.log(nodesArray);
-      console.log(linksArray);
-      console.log(NODES_OBJ);
-      console.log(LINKS_OBJ);
+      // console.log(node);
+      // console.log(link);
+      // console.log(nodesArray);
+      // console.log(linksArray);
+      // console.log(NODES_OBJ);
+      // console.log(LINKS_OBJ);
 
 
       simulation.nodes(nodesArray);
