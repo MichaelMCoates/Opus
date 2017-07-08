@@ -97,15 +97,14 @@
 
     var simulation = d3.forceSimulation()
       .force("collide", d3.forceCollide(25).iterations(4))
-      .force("charge", d3.forceManyBody())
-      .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(200).strength(1))
+      .force("charge", d3.forceManyBody().strength(-200))
+      .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(100).strength(10))
       .force("x", d3.forceX())
       .force("y", d3.forceY())
       .on("tick", ticked);
 
 
       // .force("center", d3.forceCenter(width / 2, height / 2));
-
 
     function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -182,6 +181,10 @@
         .attr('class', 'node')
         .attr("r", 7)
         .on('click', (d) => utilReceiveRelatedArtists(`https://api.spotify.com/v1/artists/${d.id}/related-artists`))
+        .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended))
         .merge(node);
 
       text = text.data(nodesArray, function(d) { return d.id; } );
