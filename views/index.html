@@ -19,8 +19,8 @@
 <body>
   <button id="getKanye">Get Kanye</button>
   <button id="getJay">Get JAY Z</button>
-  <!-- <button id="getKanyeFriends">Get Kanye's Friends</button>
-  <button id="fetchKanyeSearch">Find Kanyes with Search</button> -->
+  <button id="getKanyeFriends">Get Kanye's Friends</button>
+  <!--<button id="fetchKanyeSearch">Find Kanyes with Search</button> -->
   <svg width="960" height="600"></svg>
 
  </body>
@@ -53,10 +53,10 @@
       utilReceiveArtist(myUrl);
     }
 
-    // function getKanyeFriends() {
-    //   let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x/related-artists?&limit=5';
-    //   utilReceiveRelatedArtists(myUrl);
-    // }
+    function getKanyeFriends() {
+      let myUrl = 'https://api.spotify.com/v1/artists/5K4W6rqBFWDnAN6FQUkS6x/related-artists?&limit=5';
+      utilReceiveRelatedArtists(myUrl);
+    }
 
     // function PingSpotifyAPIAJAX(url) {
     //   $.ajax('/cors', { data: { url } }).then(
@@ -68,7 +68,7 @@
     // $('#fetchKanyeSearch').click(fetchKanyeSearch)
     $('#getKanye').click(getKanye)
     $('#getJay').click(getJay)
-    // $('#getKanyeFriends').click(getKanyeFriends)
+    $('#getKanyeFriends').click(getKanyeFriends)
   </script>
 
   <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -106,10 +106,6 @@
 
       // .force("center", d3.forceCenter(width / 2, height / 2));
 
-    function PingSpotifyAPIAJAX(url) {
-      return $.ajax('/cors', { data: { url } });
-    }
-
 
     function dragstarted(d) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -133,7 +129,9 @@
       node = g.append("g").attr("stroke", "#fff").attr("stroke-width", 1.5).selectAll(".node");
 
 
-
+    function PingSpotifyAPIAJAX(url) {
+      return $.ajax('/cors', { data: { url } });
+    }
 
     function utilReceiveArtist(url) {
       PingSpotifyAPIAJAX(url).then((response) => addParentNode(response));
@@ -145,9 +143,28 @@
       }
       CHOSEN_ARR.forEach((chosen) => {
         let linkKey = `${response.id}-${chosen.id}`;
-        LINKS_OBJ[`${response.id}`] = { "source": `${response.id}`, "target": `${chosen.id}`, "value": 6, };
+        LINKS_OBJ[`${linkKey}`] = { "source": `${response.id}`, "target": `${chosen.id}`, "value": 6, };
       });
       CHOSEN_ARR.push(response);
+
+      update();
+    }
+
+    function utilReceiveRelatedArtists(url) {
+      PingSpotifyAPIAJAX(url).then((response) => addRelativeNodes(response, url));
+    }
+
+    function addRelativeNodes(response, url) {
+      artists = response.artists.slice(14, 19);
+      console.log(artists);
+      artists.forEach((artist) => {
+        if (!NODES_OBJ[`${artist.id}`]) {
+          NODES_OBJ[`${artist.id}`] = artist;
+        }
+        let parentId = url.slice(35, 57)
+        let linkKey = `${artist.id}-${parentId}`;
+        LINKS_OBJ[`${linkKey}`] = { "source": `${artist.id}`, "target": `${parentId}`, "value": 6, };
+      });
 
       update();
     }
@@ -162,6 +179,7 @@
       node = node.enter()
         .append("circle")
         .attr("r", 7)
+        .on('click', (d) => utilReceiveRelatedArtists(`https://api.spotify.com/v1/artists/${d.id}/related-artists`))
         .merge(node);
 
 
@@ -178,12 +196,11 @@
       console.log(linksArray);
       console.log(NODES_OBJ);
       console.log(LINKS_OBJ);
-      debugger
 
 
-        simulation.nodes(nodesArray);
-        simulation.force("link").links(linksArray);
-        simulation.restart();
+      simulation.nodes(nodesArray);
+      simulation.force("link").links(linksArray);
+      simulation.restart();
     }
 
     function ticked() {
