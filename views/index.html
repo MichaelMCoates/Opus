@@ -115,17 +115,17 @@
       .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(140).strength(1).iterations(4))
       .force("center", d3.forceCenter(0, 0))
       .alphaDecay(0.003)
-      .alpha(0.3)
+      .alpha(0.4)
 
-      // .alpha(1.4)
       .on("tick", ticked);
 
+      // .alpha(1.4)
       // .alpha(10)
       // .force("collide", d3.forceCollide(25).iterations(4))
 
 
     function dragstarted(d) {
-      if (!d3.event.active) simulation.alphaTarget(0.2).restart();
+      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
     }
@@ -180,7 +180,7 @@
     }
 
     function addRelativeNodes(response, parentId) {
-      artists = [response.artists[0]].concat(response.artists.slice(1, 11));
+      artists = [response.artists[0]].concat(response.artists.slice(1, 8));
       // console.log(artists);
       artists.forEach((artist) => {
         if (!NODES_OBJ[`${artist.id}`]) {
@@ -192,8 +192,6 @@
 
       update();
     }
-
-    clipPathId = 0
 
     function update() {
       let nodesArray = Object.values(NODES_OBJ);
@@ -242,25 +240,34 @@
         .attr('r', 32);
 
       image.append('image')
-        .attr('xlink:href', function(d) { return d.images[0].url })
+        .attr('xlink:href', function(d) {
+          if (d.images[0]) {
+            return d.images[0].url;
+          } else {
+            return 'https://s3-us-west-2.amazonaws.com/opus-pro/opus-logo.png';
+          }
+        })
         .attr('width',
           function(d) {
-            let artistImage = d.images[1];
-            if (artistImage.width > artistImage.height) {
+            let artistImage = d.images[0];
+            if (!artistImage) {
+              return 64;
+            } else if (artistImage.width > artistImage.height) {
               return 64 * (artistImage.width / artistImage.height);
+            } else {
+              return 64
             }
-
-            return 64;
           }
         )
         .attr('height',
           function(d) {
             let artistImage2 = d.images[0];
-            if (artistImage2.height > artistImage2.width) {
+            if (!artistImage2) {
+              return 64;
+            } else if (artistImage2.height > artistImage2.width) {
               return 64 * (artistImage2.height / artistImage2.width);
             } else {
               return 64;
-
             }
           }
         )
