@@ -100,7 +100,7 @@
         // .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
         .attr("width", width)
         .attr("height", height)
-        .style("fill", "none")
+        .style("fill", "#222326")
         .style("pointer-events", "all")
         .call(d3.zoom()
             .on("zoom", zoomed));
@@ -143,8 +143,8 @@
 
 
     var g = svg.append("g"),
-      link = g.append("g").attr("stroke", "#000").attr("stroke-width", 1.5).selectAll(".link"),
-      node = g.append("g").attr("stroke", "#fff").attr("stroke-width", 1.5).selectAll("g.node");
+      link = g.append("g").attr("stroke", "#fff").attr("stroke-width", 0.5).selectAll(".link"),
+      node = g.append("g").selectAll("g.node");
       text = g.append("g").selectAll(".text")
       image = g.append("g").selectAll(".image");
       // clipPath = g.append("g").selectAll(".clipPath");
@@ -225,8 +225,11 @@
         .append("text")
         .attr('class', 'text')
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-        // .attr("dx", )
-        // .attr("dy", ".35em")
+        .attr("dx", 32)
+        .attr("dy", 32)
+        .style("fill", "#fff")
+          .style("font-family", "Arial")
+          .style("font-size", 12)
         .text(function(d) { return d.name })
         .merge(text);
 
@@ -237,6 +240,7 @@
         .append('g')
         .attr('class', 'image')
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+        .on('click', (d) => utilReceiveRelatedArtists(`${d.id}`))
         .call(d3.drag()
           .on("start", dragstarted)
           .on("drag", dragged)
@@ -247,13 +251,16 @@
         .attr('id', function(d) {return (`clipCircle${d.id}`)})
         .attr('class', 'clipPath')
         .append('circle')
+        .attr('fill', '#222326')
+        .attr("stroke", "#fff")
+        .attr("stroke-width", 50)
         .attr('r', 32);
 
       image.append('image')
         .attr('xlink:href', function(d) { return d.images[0].url })
         .attr('width',
           function(d) {
-            let artistImage = d.images[0];
+            let artistImage = d.images[1];
             if (artistImage.width > artistImage.height) {
               return 64 * (artistImage.width / artistImage.height);
             }
@@ -275,38 +282,6 @@
         .attr('y', '-32px')
         .attr("clip-path", function(d) {return (`url(#clipCircle${d.id})`)})
         .attr('x', '-32px');
-
-
-
-
-
-      // clipPathId++;
-      //
-      // clipPath = clipPath.data(nodesArray, function(d) { return d.id; } );
-      // clipPath.exit().remove();
-      // clipPath = clipPath.enter()
-      //   .append("clipPath")
-      //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-      //   .attr('id', function(d) {return (`clipCircle${d.id}`)})
-      //   .attr('class', 'clipPath')
-      //   .append('circle')
-      //     .attr('r', 45)
-      //   .merge(clipPath);
-      //
-      // image = image.data(nodesArray, function(d) { return d.id; } );
-      // image.exit().remove();
-      // image = image.enter()
-      //   .append("image")
-      //   .attr('class', 'image')
-      //   .attr('xlink:href', function(d) { return d.images[0].url })
-      //   .attr('width', 80)
-      //   .attr('height', 80)
-      //   .attr('y', '-20px')
-      //   // .attr("clip-path", function(d) {return (`url(#clipCircle${d.id})`)})
-      //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-      //   .attr('x', '-20px')
-      //   .merge(image);
-
 
       link = link.data(linksArray, function(d) { return d.source.id + "-" + d.target.id; });
       link.exit().remove();
@@ -342,9 +317,6 @@
         let thisX = (d.x + width / 2);
         return `translate(${thisX}, ${thisY})`
       });
-      //
-      // clipPath.attr("x", function(d) { return d.x; })
-      //     .attr("y", function(d) { return d.y; });
 
       link.attr("x1", function(d) { return d.source.x; })
           .attr("y1", function(d) { return d.source.y; })
