@@ -21,7 +21,7 @@
   <button id="getJay">Get JAY Z</button>
   <button id="getKanyeFriends">Get Kanye's Friends</button>
   <!--<button id="fetchKanyeSearch">Find Kanyes with Search</button> -->
-  <svg width="960" height="600"></svg>
+  <svg width="1280" height="900"></svg>
 
  </body>
 
@@ -100,7 +100,7 @@
         // .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
         .attr("width", width)
         .attr("height", height)
-        .style("fill", "#e0e0e0")
+        .style("fill", "#ffffff")
         .style("pointer-events", "all")
         .call(d3.zoom()
             .on("zoom", zoomed));
@@ -110,7 +110,7 @@
     }
 
     var simulation = d3.forceSimulation()
-      .force("collision", d3.forceCollide(25).radius(10))
+      .force("collision", d3.forceCollide(50))
       .force("charge", d3.forceManyBody().strength(-30000).distanceMin(400))
       .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(140).strength(1).iterations(4))
       .force("center", d3.forceCenter(0, 0))
@@ -161,10 +161,10 @@
     }
 
     function addParentNode(response) {
-      // if (!NODES_OBJ[`${response.id}`]) {
+      if (!NODES_OBJ[`${response.id}`]) {
         response['chosen'] = true;
         NODES_OBJ[`${response.id}`] = response;
-      // }
+      }
       CHOSEN_ARR.forEach((chosen) => {
         let linkKey = `${response.id}-${chosen.id}`;
         LINKS_OBJ[`${linkKey}`] = { "source": `${response.id}`, "target": `${chosen.id}`, "value": 6, };
@@ -180,7 +180,7 @@
     }
 
     function addRelativeNodes(response, parentId) {
-      artists = [response.artists[0]].concat(response.artists.slice(3, 6));
+      artists = [response.artists[0]].concat(response.artists.slice(1, 11));
       // console.log(artists);
       artists.forEach((artist) => {
         if (!NODES_OBJ[`${artist.id}`]) {
