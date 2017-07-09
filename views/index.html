@@ -111,10 +111,10 @@
 
     var simulation = d3.forceSimulation()
       // .force("collision", d3.forceCollide(25).radius(10))
-      .force("charge", d3.forceManyBody().strength(-20000).distanceMin(400))
-      .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(300).strength(3).iterations(4))
+      .force("charge", d3.forceManyBody().strength(-20000).distanceMin(250))
+      .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(140).strength(3).iterations(4))
       .force("center", d3.forceCenter(0, 0))
-      .alphaDecay(0.003)
+      .alphaDecay(0.004)
       .alpha(0.3)
 
       // .alpha(1.4)
@@ -219,21 +219,6 @@
         // .attr('fx', function(d, i) { return i * 50 })
         // .attr('fy', function(d, i) { return i * 50 });
 
-      text = text.data(nodesArray, function(d) { return d.id; } );
-      text.exit().remove();
-      text = text.enter()
-        .append("text")
-        .attr('class', 'text')
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-        .attr("dx", 32)
-        .attr("dy", 32)
-        .style("fill", "#fff")
-          .style("font-family", "Arial")
-          .style("font-size", 12)
-        .text(function(d) { return d.name })
-        .merge(text);
-
-
       image = image.data(nodesArray, function(d) { return d.id; } );
       image.exit().remove();
       image = image.enter()
@@ -291,6 +276,21 @@
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
         .attr("fill", function(d) { return color(2); })
         .merge(link);
+
+
+      text = text.data(nodesArray, function(d) { return d.id; } );
+      text.exit().remove();
+      text = text.enter()
+        .append("text")
+        .attr('class', 'text')
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+        .attr("dx", 38)
+        .attr("dy", 3)
+        .style("fill", "#fff")
+          .style("font-family", "Arial")
+          .style("font-size", 12)
+        .text(function(d) { return d.name })
+        .merge(text);
 
       // console.log(node);
       // console.log(link);
