@@ -115,7 +115,7 @@
       .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(300).strength(3).iterations(4))
       .force("center", d3.forceCenter(0, 0))
       .alphaDecay(0.003)
-      .alpha(0.2)
+      .alpha(0.3)
 
       // .alpha(1.4)
       .on("tick", ticked);
@@ -144,8 +144,10 @@
 
     var g = svg.append("g"),
       link = g.append("g").attr("stroke", "#000").attr("stroke-width", 1.5).selectAll(".link"),
-      node = g.append("g").attr("stroke", "#fff").attr("stroke-width", 1.5).selectAll(".node"),
-      text = g.append("g").selectAll(".text");
+      node = g.append("g").attr("stroke", "#fff").attr("stroke-width", 1.5).selectAll("g.node");
+      text = g.append("g").selectAll(".text")
+      image = g.append("g").selectAll(".image");
+      // clipPath = g.append("g").selectAll(".clipPath");
 
 
 
@@ -191,6 +193,8 @@
       update();
     }
 
+    clipPathId = 0
+
     function update() {
       let nodesArray = Object.values(NODES_OBJ);
       let linksArray = Object.values(LINKS_OBJ);
@@ -201,7 +205,8 @@
         .append("circle")
         .attr('class', 'node')
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-        .attr("r", 7)
+        .attr("r", 25)
+        // .attr('fill', 'none')
         .on('click', (d) => utilReceiveRelatedArtists(`${d.id}`))
         .call(d3.drag()
           .on("start", dragstarted)
@@ -210,7 +215,7 @@
         .merge(node);
 
       node.filter(function(d, i) { return d.chosen } )
-        .attr('fill', function(d) {return color(2)})
+        // .attr('fill', function(d) {return color(2)})
         // .attr('fx', function(d, i) { return i * 50 })
         // .attr('fy', function(d, i) { return i * 50 });
 
@@ -220,10 +225,87 @@
         .append("text")
         .attr('class', 'text')
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-        .attr("dx", 12)
-        .attr("dy", ".35em")
+        // .attr("dx", )
+        // .attr("dy", ".35em")
         .text(function(d) { return d.name })
         .merge(text);
+
+
+      image = image.data(nodesArray, function(d) { return d.id; } );
+      image.exit().remove();
+      image = image.enter()
+        .append('g')
+        .attr('class', 'image')
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+        .call(d3.drag()
+          .on("start", dragstarted)
+          .on("drag", dragged)
+          .on("end", dragended))
+        .merge(image);
+
+      image.append("clipPath")
+        .attr('id', function(d) {return (`clipCircle${d.id}`)})
+        .attr('class', 'clipPath')
+        .append('circle')
+        .attr('r', 32);
+
+      image.append('image')
+        .attr('xlink:href', function(d) { return d.images[0].url })
+        .attr('width',
+          function(d) {
+            let artistImage = d.images[0];
+            if (artistImage.width > artistImage.height) {
+              return 64 * (artistImage.width / artistImage.height);
+            }
+
+            return 64;
+          }
+        )
+        .attr('height',
+          function(d) {
+            let artistImage2 = d.images[0];
+            if (artistImage2.height > artistImage2.width) {
+              return 64 * (artistImage2.height / artistImage2.width);
+            } else {
+              return 64;
+
+            }
+          }
+        )
+        .attr('y', '-32px')
+        .attr("clip-path", function(d) {return (`url(#clipCircle${d.id})`)})
+        .attr('x', '-32px');
+
+
+
+
+
+      // clipPathId++;
+      //
+      // clipPath = clipPath.data(nodesArray, function(d) { return d.id; } );
+      // clipPath.exit().remove();
+      // clipPath = clipPath.enter()
+      //   .append("clipPath")
+      //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+      //   .attr('id', function(d) {return (`clipCircle${d.id}`)})
+      //   .attr('class', 'clipPath')
+      //   .append('circle')
+      //     .attr('r', 45)
+      //   .merge(clipPath);
+      //
+      // image = image.data(nodesArray, function(d) { return d.id; } );
+      // image.exit().remove();
+      // image = image.enter()
+      //   .append("image")
+      //   .attr('class', 'image')
+      //   .attr('xlink:href', function(d) { return d.images[0].url })
+      //   .attr('width', 80)
+      //   .attr('height', 80)
+      //   .attr('y', '-20px')
+      //   // .attr("clip-path", function(d) {return (`url(#clipCircle${d.id})`)})
+      //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+      //   .attr('x', '-20px')
+      //   .merge(image);
 
 
       link = link.data(linksArray, function(d) { return d.source.id + "-" + d.target.id; });
@@ -254,6 +336,15 @@
 
       text.attr("x", function(d) { return d.x; })
           .attr("y", function(d) { return d.y; });
+
+      image.attr('transform', function(d) {
+        let thisY = (d.y + height / 2);
+        let thisX = (d.x + width / 2);
+        return `translate(${thisX}, ${thisY})`
+      });
+      //
+      // clipPath.attr("x", function(d) { return d.x; })
+      //     .attr("y", function(d) { return d.y; });
 
       link.attr("x1", function(d) { return d.source.x; })
           .attr("y1", function(d) { return d.source.y; })
