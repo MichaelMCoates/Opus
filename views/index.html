@@ -70,7 +70,9 @@
     $('#getKanyeFriends').click(getKanyeFriends)
     $('.search-form').submit(function(event) {
       event.preventDefault();
-      utilSearch($('.search-input').val());
+      let inputEl = $('.search-input');
+      utilSearch(inputEl.val());
+      inputEl.val('');
     })
   </script>
 
@@ -182,6 +184,17 @@
       PingSpotifyAPIAJAX(url).then((response) => addRelativeNodes(response, id));
     }
 
+
+    function utilSearch(query) {
+      query = query.trim();
+      let url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist`;
+      PingSpotifyAPIAJAX(url)
+        .then((response) => {
+          let id = response.artists.items[0].id;
+          utilReceiveArtist(id);
+        });
+    }
+
     function addRelativeNodes(response, parentId) {
       artists = [response.artists[0]].concat(response.artists.slice(1, 8));
       // console.log(artists);
@@ -205,6 +218,7 @@
       node = node.enter()
         .append("circle")
         .attr('class', 'node')
+        .attr('test', function(d) {console.log(d)})
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
         .attr("r", 34)
         .attr('fill', '#000')
@@ -315,19 +329,6 @@
       simulation.nodes(nodesArray);
       simulation.force("link").links(linksArray);
       simulation.restart();
-    }
-
-
-    function utilSearch(query) {
-      query = query.trim();
-      let id
-      let url = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=artist`
-      PingSpotifyAPIAJAX(url)
-        .then((response) => {
-          let result = response.artists.items[0];
-          id = result.id;
-          addParentNode(result);
-        }).then(() => utilReceiveRelatedArtists(id));
     }
 
     function ticked() {
