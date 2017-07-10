@@ -4,6 +4,63 @@
   <title>Opus</title>
   <style>
 
+  html, body, header, nav, h1, h3, h4, h5, a,
+  ul, li, strong, main, button, i,
+  section, img, div, h2, p, form,
+  fieldset, label, input, textarea,
+  span, article, footer, time, small {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    font-family: 'Helvetica';
+    color: inherit;
+    text-align: inherit;
+    text-decoration: inherit;
+    vertical-align: inherit;
+    box-sizing: inherit;
+    background: transparent;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  input[type="password"],
+  input[type="email"],
+  input[type="text"],
+  input[type="submit"],
+  textarea,
+  button {
+    /*
+    Get rid of native styling. Read more here:
+    http://css-tricks.com/almanac/properties/a/appearance/
+    */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  button,
+  input[type="submit"] {
+    cursor: pointer;
+  }
+
+  /* Clearfix */
+
+  .group:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+
   .links line {
     stroke: #999;
     stroke-opacity: 0.6;
@@ -14,20 +71,107 @@
     stroke-width: 1.5px;
   }
 
+  .header-div {
+    width: 99vw;
+    background: #FFD700;
+  }
+
+  .header-title {
+    font-size: 20px;
+    margin-right: 20px;
+    text-shadow: 2px 2px 3px #ffffff;
+  }
+
+  .header-contents {
+    width: 90vw;
+    height: 55px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .header-logo {
+    height: 47px;
+    width: 47px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+
+  .search-div {
+    width: 40vw;
+  }
+
+  .search-input {
+    -webkit-appearance: none
+    margin-left: 30px;
+    padding-left: 30px;
+    width: 36vw;
+    height: 35px;
+    font-size: 14px;
+    text-transform: capitalize;
+    line-height: 20px;
+    display: block;
+    padding: 5px 15px;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 2px;
+    -webkit-transition: width 0.5s ease-out;
+    transition: width 0.5s ease-out;
+  }
+
+  .search-input:focus {
+    width: 70vw;
+    border: 1px solid #2a2a2a;
+    outline: none;
+  }
+
+  .main-body {
+
+  }
+
+  .svg-div {
+    width: 99vw;
+    height: 80vh;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .artist-box {
+
+  }
+
   </style>
 </head>
 <body>
-  <div class='search-div'>
-    <form class='search-form' >
-      <input class='search-input' placeholder="Type the name of an artist">
-    </form>
+  <div>
+    <div class="header-div">
+      <div class='header-contents'>
+        <img class='header-logo'src="https://s3-us-west-2.amazonaws.com/opus-pro/opus-logo.png">
+        <h1 class='header-title'>Opus</h1>
+        <div class="search-div">
+          <form class='search-form'>
+            <input class='search-input' placeholder="Type the name of an artist to search. press enter to set parent nodes.">
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- <button id="getKanye">Get Kanye</button> -->
+    <!-- <button id="getJay">Get JAY Z</button> -->
+    <!-- <button id="getKanyeFriends">Get Kanye's Friends</button> -->
+    <!--<button id="fetchKanyeSearch">Find Kanyes with Search</button> -->
+    <br>
+
+    <div class='main-body'>
+      <div class="svg-div">
+        <svg width="1425" height="625"></svg>
+      </div>
+    </div>
+    <div class="artist-box"></div>
   </div>
-  <button id="getKanye">Get Kanye</button>
-  <button id="getJay">Get JAY Z</button>
-  <button id="getKanyeFriends">Get Kanye's Friends</button>
-  <!--<button id="fetchKanyeSearch">Find Kanyes with Search</button> -->
-  <br>
-  <svg width="1280" height="900"></svg>
 
  </body>
 
@@ -86,7 +230,9 @@
     let CHOSEN_ARR = [];
     let nodes = [];
     let links = [];
-    let point = [0, 0]
+    let point = [0, 0];
+    let ARTIST_INFO = '';
+    let ARTIST_TRACKS = [];
 
 
     var svg = d3.select("svg"),
@@ -113,7 +259,7 @@
       .force("charge", d3.forceManyBody().strength(-30000).distanceMin(400))
       .force("link", d3.forceLink().id(function(d) { return d.id; }).distance(140).strength(1).iterations(4))
       .force("center", d3.forceCenter(0, 0))
-      .alphaDecay(0.003)
+      .alphaDecay(0.004)
       .alpha(0.4)
 
       .on("tick", ticked);
@@ -233,6 +379,12 @@
         .attr("r", 34)
         .attr('fill', '#000')
         .on('click', (d) => utilReceiveRelatedArtists(`${d.id}`))
+        .on("mouseover", function(d) {
+              d3.select(this).style("cursor", "pointer"); /*semicolon here*/
+            })
+        .on("mouseout", function(d) {
+              d3.select(this).style("cursor", "default"); /*and there*/
+            })
         .call(d3.drag()
           .on("start", dragstarted)
           .on("drag", dragged)
@@ -254,6 +406,12 @@
           point[1] = d.y;
           utilReceiveRelatedArtists(`${d.id}`);
         })
+        .on("mouseover", function(d) {
+              d3.select(this).style("cursor", "pointer");
+            })
+        .on("mouseout", function(d) {
+              d3.select(this).style("cursor", "default");
+            })
         .call(d3.drag()
           .on("start", dragstarted)
           .on("drag", dragged)
