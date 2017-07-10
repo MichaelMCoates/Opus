@@ -74,13 +74,21 @@
   .header-div {
     width: 99vw;
     background: #FFD700;
+      /*background: -webkit-linear-gradient(left top, red, yellow);
+      background: -o-linear-gradient(bottom right, red, yellow);
+      background: -moz-linear-gradient(bottom right, red, yellow);
+      background: linear-gradient(to right, #ffffff, #FFD700); */
   }
 
   .header-title {
     font-size: 50px;
     margin-right: 20px;
-    text-shadow: -2px 2px 0px #ffffff;
+    text-shadow: -2px 2px 0px #505050;
     color: #FFD700;
+
+    /*background: linear-gradient(to bottom right, #0e0e0e, #ffffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;*/
   }
 
   .header-contents {
@@ -164,7 +172,6 @@
     <!-- <button id="getJay">Get JAY Z</button> -->
     <!-- <button id="getKanyeFriends">Get Kanye's Friends</button> -->
     <!--<button id="fetchKanyeSearch">Find Kanyes with Search</button> -->
-    <br>
 
     <div class='main-body'>
       <div class="svg-div">
@@ -366,7 +373,7 @@
         LINKS_OBJ[`${linkKey2}`] = { "source": `${parentId}`, "target": `${artist.id}`, "value": 6, };
       });
 
-      update(parentId);
+      update();
     }
 
     // function searchNodes(nodesArray, parentId){
@@ -378,6 +385,7 @@
     // }
 
     function update() {
+
 
       let nodesArray = Object.values(NODES_OBJ);
       let linksArray = Object.values(LINKS_OBJ);
@@ -405,7 +413,7 @@
 
       node.filter(function(d, i) { return d.chosen } )
         .attr('fill', '#FFD700')
-        .attr('r', 45)
+        .attr('r', 42)
 
       image = image.data(nodesArray, function(d) { return d.id; } );
       image.exit().remove();
@@ -502,7 +510,7 @@
 
       simulation.nodes(nodesArray);
       simulation.force("link").links(linksArray);
-      simulation.restart();
+      simulation.alpha(0.1).restart();
     }
 
     function ticked() {
