@@ -80,19 +80,13 @@
 
 
   <script type="text/javascript">
-    // function searchNode(id){
-    //   for (var i=0; i < ALL_NODES.length; i++) {
-    //     if (ALL_NODES[i].id === id) {
-    //         return ALL_NODES[i];
-    //     }
-    //   }
-    // }
 
     let NODES_OBJ = {};
     let LINKS_OBJ = {};
     let CHOSEN_ARR = [];
     let nodes = [];
     let links = [];
+    let point = [0, 0]
 
 
     var svg = d3.select("svg"),
@@ -166,10 +160,10 @@
     }
 
     function addParentNode(response) {
-      if (!NODES_OBJ[`${response.id}`]) {
+      // if (!NODES_OBJ[`${response.id}`]) {
         response['chosen'] = true;
         NODES_OBJ[`${response.id}`] = response;
-      }
+      // }
       CHOSEN_ARR.forEach((chosen) => {
         let linkKey = `${response.id}-${chosen.id}`;
         LINKS_OBJ[`${linkKey}`] = { "source": `${response.id}`, "target": `${chosen.id}`, "value": 6, };
@@ -197,8 +191,9 @@
 
     function addRelativeNodes(response, parentId) {
       artists = [response.artists[0]].concat(response.artists.slice(1, 8));
-      // console.log(artists);
       artists.forEach((artist) => {
+        artist.x = point[0];
+        artist.y = point[1];
         if (!NODES_OBJ[`${artist.id}`]) {
           NODES_OBJ[`${artist.id}`] = artist;
         }
@@ -206,10 +201,19 @@
         LINKS_OBJ[`${linkKey}`] = { "source": `${artist.id}`, "target": `${parentId}`, "value": 6, };
       });
 
-      update();
+      update(parentId);
     }
 
-    function update() {
+    function searchNodes(nodesArray, parentId){
+      for (var i=0; i < nodesArray.length; i++) {
+        if (nodesArray[i].id === parentId) {
+            return nodesArray[i];
+        }
+      }
+    }
+
+    function update(parentId) {
+
       let nodesArray = Object.values(NODES_OBJ);
       let linksArray = Object.values(LINKS_OBJ);
 
@@ -218,7 +222,6 @@
       node = node.enter()
         .append("circle")
         .attr('class', 'node')
-        .attr('test', function(d) {console.log(d)})
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
         .attr("r", 34)
         .attr('fill', '#000')
@@ -230,9 +233,8 @@
         .merge(node);
 
       node.filter(function(d, i) { return d.chosen } )
-        // .attr('fill', function(d) {return color(2)})
-        // .attr('fx', function(d, i) { return i * 50 })
-        // .attr('fy', function(d, i) { return i * 50 });
+        .attr('fill', '#FFD700')
+        .attr('r', 45)
 
       image = image.data(nodesArray, function(d) { return d.id; } );
       image.exit().remove();
@@ -240,7 +242,11 @@
         .append('g')
         .attr('class', 'image')
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
-        .on('click', (d) => utilReceiveRelatedArtists(`${d.id}`))
+        .on('click', (d) => {
+          point[0] = d.x;
+          point[1] = d.y;
+          utilReceiveRelatedArtists(`${d.id}`);
+        })
         .call(d3.drag()
           .on("start", dragstarted)
           .on("drag", dragged)
