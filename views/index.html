@@ -240,19 +240,23 @@
       height = +svg.attr("height"),
       color = d3.scaleOrdinal(d3.schemeCategory20);
 
+    var zoom = d3.zoom()
+        .on("zoom", zoomed)
 
     svg.append("rect")
-        // .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
         .attr("width", width)
         .attr("height", height)
         .style("fill", "#ffffff")
         .style("pointer-events", "all")
-        .call(d3.zoom()
-            .on("zoom", zoomed));
+        .call(zoom);
 
     function zoomed() {
       g.attr("transform", d3.event.transform);
     }
+
+    // function resetted() {
+    //   svg.call(zoom.transform, d3.zoomIdentity.translate(-point[0], -point[1]));
+    // }
 
     var simulation = d3.forceSimulation()
       .force("collision", d3.forceCollide(75))
