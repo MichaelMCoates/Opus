@@ -151,14 +151,15 @@
 
   .artist-box {
     margin: 0 auto;
-    width: 80vw;
+    width: 100vw;
+    background: #FFD700;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     height: 17.3vh;
     font-size: 14px;
-    margin-top: 5px;
+    padding-top: 5px;
   }
 
   .artist-info {
@@ -170,7 +171,7 @@
   }
 
   audio {
-    width: 50vw;
+    width: 100vw;
   }
 
   .playlist-div {
@@ -183,9 +184,9 @@
     -webkit-column-gap: 4em;
        -moz-column-gap: 4em;
             column-gap: 4em;
-    -webkit-column-rule: 1px dotted #ddd;
-       -moz-column-rule: 1px dotted #ddd;
-            column-rule: 1px dotted #ddd;
+    -webkit-column-rule: 1px solid #0e0e0e;
+       -moz-column-rule: 1px solid #0e0e0e;
+            column-rule: 1px solid #0e0e0e;
   }
 
   .playlist-li {
@@ -198,7 +199,7 @@
   .reset-button {
     position: fixed;
     padding: 7px 14px;
-    right: 5vw;
+    left: 5vw;
     top: 10vh;
     border-radius: 20px;
     background: #FFD700;
@@ -248,11 +249,11 @@
 
       </div>
     </div>
-    <div class="artist-box">
+    <div class="artist-box" id='step5'>
       <div class="artist-info" >
 
       </div>
-      <div class="playlist-div" id='step5'>
+      <div class="playlist-div">
         <ul class='playlist-ul'>
 
         </ul>
@@ -778,9 +779,7 @@
 
         intro.onchange(function(targetElement) {
           let inputEl = $('.search-input');
-          console.log(targetElement);
-          console.log("targetElement.id")
-          console.log(targetElement.id)
+
           switch (targetElement.id) {
             case 'step1':
               break;
