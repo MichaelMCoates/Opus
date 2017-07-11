@@ -228,7 +228,7 @@
     <div class='main-body'>
       <button class='reset-button'>RESET</button>
       <div class="svg-div">
-        <svg width="1900" height="768"></svg>
+
       </div>
     </div>
     <div class="artist-box">
@@ -322,8 +322,18 @@
       $('.playlist-ul').empty();
       $('.player-div').empty();
       update();
-
     })
+
+    var viewportWidth = $(window).width();
+    var viewportHeight = $(window).height();
+
+    $('.svg-div').append(
+      `<svg
+        width=${viewportWidth}
+        height=${viewportHeight * .75}
+        >
+      </svg>`
+    )
 
     var svg = d3.select("svg"),
       width = +svg.attr("width"),
