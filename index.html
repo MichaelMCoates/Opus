@@ -205,6 +205,22 @@
     color: #0e0e0e;
   }
 
+  /*.introjs-helperLayer {
+    display: none;
+  }*/
+
+  .tooltip {
+  }
+
+  .intro {
+    width: 25vw;
+  }
+
+  .introjs-tooltiptext {
+    text-align: center;
+    padding: 10px;
+  }
+
   </style>
   <link rel="stylesheet" type="text/css" href="assets/introjs.css">
 </head>
@@ -216,7 +232,7 @@
         <h1 class='header-title'>OPUS</h1>
         <div class="search-div">
           <form class='search-form'>
-            <input class='search-input' placeholder="Type the name of an artist to search, then press enter" data-intro='Hello step one!'>
+            <input class='search-input' placeholder="Type the name of an artist to search, then press enter" id='step1'>
           </form>
         </div>
       </div>
@@ -227,16 +243,16 @@
     <!--<button id="fetchKanyeSearch">Find Kanyes with Search</button> -->
 
     <div class='main-body'>
-      <button class='reset-button'>RESET</button>
+      <button class='reset-button' id='step6'>RESET</button>
       <div class="svg-div">
 
       </div>
     </div>
     <div class="artist-box">
-      <div class="artist-info">
+      <div class="artist-info" >
 
       </div>
-      <div class="playlist-div">
+      <div class="playlist-div" id='step5'>
         <ul class='playlist-ul'>
 
         </ul>
@@ -394,11 +410,10 @@
 
     var g = svg.append("g"),
       link = g.append("g").attr("stroke", "#000000").attr("stroke-width", 1).selectAll(".link"),
-      node = g.append("g").selectAll(".node");
-      text = g.append("g").selectAll(".text")
-      image = g.append("g").selectAll(".image");
+      node = g.append("g").attr('id', 'step3').selectAll(".node");
+      text = g.append("g").attr('id', 'step2').selectAll(".text")
+      image = g.append("g").attr('id', 'step4').selectAll(".image");
       // clipPath = g.append("g").selectAll(".clipPath");
-
 
 
     function PingSpotifyAPIAJAX(url) {
@@ -715,7 +730,70 @@
     }
 
     document.addEventListener("DOMContentLoaded", function(event) {
-      introJs().start();
+      var intro = introJs();
+        intro.setOptions({
+          showStepNumbers: false,
+          showBullets: false,
+          showProgress: true,
+          hidePrev: true,
+          tooltipClass: 'tooltip',
+          steps: [
+            {
+              intro: "Welcome to Opus! <br><br> Opus is an artist-recommendation data visualization application, using the Spotify Web API and D3.js. Our goal is to help you find your next favorite artist! Press next or enter for a tour around.",
+              tooltipClass: 'intro',
+            },
+            {
+              element: '#step1',
+              intro: "Start by typing an artist you like in here. Press tab, type in your artist, then press Enter.",
+            },
+            {
+              element: '#step2',
+              intro: "The artists you enter will be added to the view.",
+              position: 'right',
+            },
+            {
+              element: '#step3',
+              intro: 'Opus will fetch samples of their top songs from Spotify, as well as artists related to them.',
+              position: 'left'
+            },
+            {
+              element: '#step3',
+              intro: "Click on another artist to fetch their songs and relations.",
+              position: 'right'
+            },
+            {
+              element: '#step5',
+              intro: "Click on a song to play a 30 second sample.",
+              position: 'top'
+            },
+            {
+              element: '#step6',
+              intro: 'Click this to reset the whole page.'
+            },
+            {
+              intro: 'And that\'s it! Try adding multiple artists, zooming in and out of the view, and dragging the circles around. Opus hopes that you find your new favorite artist here!'
+            }
+          ]
+        });
+
+        intro.onchange(function(targetElement) {
+          let inputEl = $('.search-input');
+          console.log(targetElement);
+          console.log("targetElement.id")
+          console.log(targetElement.id)
+          switch (targetElement.id) {
+            case 'step1':
+              break;
+            case 'step2':
+              utilSearch(inputEl.val());
+              inputEl.val('');
+              break;
+            default:
+              inputEl.focus();
+
+
+          }
+        }).start();
     });
   </script>
 </footer>
