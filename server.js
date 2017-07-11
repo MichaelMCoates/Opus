@@ -5,8 +5,11 @@ const request = require('request');
 const app = express();
 
 app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname + '/../views/index.html'));
+  res.sendFile(path.join(__dirname + '/index.html'));
 });
+
+app.use('/lib', express.static(__dirname + '/lib'));
+app.use('/assets', express.static(__dirname + '/assets'));
 
 // app.use(express.static(__dirname + '/../views/index.html'));
 

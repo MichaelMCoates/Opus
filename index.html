@@ -206,6 +206,7 @@
   }
 
   </style>
+  <link rel="stylesheet" type="text/css" href="assets/introjs.css">
 </head>
 <body>
   <div>
@@ -215,7 +216,7 @@
         <h1 class='header-title'>OPUS</h1>
         <div class="search-div">
           <form class='search-form'>
-            <input class='search-input' placeholder="Type the name of an artist to search, then press enter">
+            <input class='search-input' placeholder="Type the name of an artist to search, then press enter" data-intro='Hello step one!'>
           </form>
         </div>
       </div>
@@ -246,6 +247,7 @@
     </div>
   </div>
 
+  <script type="text/javascript" src="lib/intro.js"></script>
  </body>
 
 <footer>
@@ -712,7 +714,9 @@
           .attr("y2", function(d) { return d.target.y; });
     }
 
+    document.addEventListener("DOMContentLoaded", function(event) {
+      introJs().start();
+    });
   </script>
-
 </footer>
 </html>
