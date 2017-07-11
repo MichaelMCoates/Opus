@@ -93,7 +93,7 @@
 
   .header-contents {
     width: 90vw;
-    height: 55px;
+    height: 7vh;
     margin: 0 auto;
     display: flex;
     justify-content: flex-start;
@@ -154,21 +154,45 @@
     width: 80vw;
     display: flex;
     flex-direction: column;
-    height: 138px;
+    align-items: center;
+    justify-content: space-between;
+    height: 17.3vh;
+    font-size: 14px;
+    margin-top: 5px;
+  }
 
+  .artist-info {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .player-div {
   }
 
   audio {
-    width: 100%;
+    width: 50vw;
   }
 
   .playlist-div {
   }
 
   .playlist-ul {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    column-count: 2;
+    -webkit-columns: 3 200px;
+       -moz-columns: 3 200px;
+            columns: 3 200px;
+    -webkit-column-gap: 4em;
+       -moz-column-gap: 4em;
+            column-gap: 4em;
+    -webkit-column-rule: 1px dotted #ddd;
+       -moz-column-rule: 1px dotted #ddd;
+            column-rule: 1px dotted #ddd;
+  }
+
+  .playlist-li {
+  }
+
+  .active {
+    font-weight: bold;
   }
 
   </style>
@@ -200,13 +224,13 @@
       <div class="artist-info">
 
       </div>
-      <div class="player-div">
-
-      </div>
       <div class="playlist-div">
         <ul class='playlist-ul'>
 
         </ul>
+      </div>
+      <div class="player-div">
+
       </div>
     </div>
   </div>
@@ -371,7 +395,6 @@
     }
 
     function addSongsToDOM(songs) {
-      console.log(songs);
       let name = songs.tracks[0].artists[0].name
       let tracks = songs.tracks.filter((track) => { return track.preview_url !== null });
       let artistInfo = $('.artist-info');
@@ -395,13 +418,24 @@
         );
 
         tracks.forEach((track, idx) => {
-          playlistUl.append(
-            `<li class='playlist-li'>
+          if (idx === 0) {
+            console.log("WHAT");
+            playlistUl.append(
+              `<li class='playlist-li active'>
+                <a href="${track.preview_url}">
+                  ${idx + 1}. ${track.name}
+                </a>
+              </li>`
+            )
+          } else {
+            playlistUl.append(
+              `<li class='playlist-li'>
               <a href="${track.preview_url}">
-                ${idx + 1}. ${track.name}
+              ${idx + 1}. ${track.name}
               </a>
-            </li>`
-          );
+              </li>`
+            );
+          }
         });
       } else {
         playlistUl.append(
@@ -421,7 +455,7 @@
       let trackLength = tracks.length;
       let link;
       let playerEl = player[0];
-      playerEl.volume = 0.2;
+      playerEl.volume = 0.1;
       playerEl.play();
       playerEl.addEventListener('ended', function(e) {
         current++;
@@ -430,14 +464,26 @@
           current = 0;
         }
 
-        link = playlist.find('a')[current];
-        run($(link), playerEl);
+        link = $(tracks[current]);
+        run(link, playerEl);
       });
 
-      console.log(playlist.find('a'));
-
-
+      tracks.click(function(e) {
+        e.preventDefault();
+        link = $(this);
+        current = link.parent().index();
+        run(link, playerEl);
+      });
     }
+
+    function run(link, playerEl){
+      playerEl.src = link.attr('href');
+      parentEl = link.parent();
+      parentEl.addClass('active').siblings().removeClass('active');
+      playerEl.load();
+      playerEl.play();
+    }
+
 
     function addParentNode(response) {
       if (!NODES_OBJ[`${response.id}`]) {
