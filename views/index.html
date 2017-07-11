@@ -195,6 +195,16 @@
     font-weight: bold;
   }
 
+  .reset-button {
+    position: fixed;
+    padding: 7px 14px;
+    right: 5vw;
+    top: 10vh;
+    border-radius: 20px;
+    background: #FFD700;
+    color: #0e0e0e;
+  }
+
   </style>
 </head>
 <body>
@@ -216,6 +226,7 @@
     <!--<button id="fetchKanyeSearch">Find Kanyes with Search</button> -->
 
     <div class='main-body'>
+      <button class='reset-button'>RESET</button>
       <div class="svg-div">
         <svg width="1900" height="768"></svg>
       </div>
@@ -255,31 +266,26 @@
     //   utilReceiveSearch(myUrl);
     // }
 
-    function getKanye() {
-      let id = '5K4W6rqBFWDnAN6FQUkS6x';
-      utilFetchArtist(id);
-    }
-
-    function getJay() {
-      let id = '3nFkdlSjzX9mRTtwJOzDYB';
-      utilFetchArtist(id);
-    }
-
-    function getKanyeFriends() {
-      let id = '5K4W6rqBFWDnAN6FQUkS6x';
-      utilFetchRelatedArtists(id);
-    }
+    // function getKanye() {
+    //   let id = '5K4W6rqBFWDnAN6FQUkS6x';
+    //   utilFetchArtist(id);
+    // }
+    //
+    // function getJay() {
+    //   let id = '3nFkdlSjzX9mRTtwJOzDYB';
+    //   utilFetchArtist(id);
+    // }
+    //
+    // function getKanyeFriends() {
+    //   let id = '5K4W6rqBFWDnAN6FQUkS6x';
+    //   utilFetchRelatedArtists(id);
+    // }
 
     // $('#fetchKanyeSearch').click(fetchKanyeSearch)
-    $('#getKanye').click(getKanye)
-    $('#getJay').click(getJay)
-    $('#getKanyeFriends').click(getKanyeFriends)
-    $('.search-form').submit(function(event) {
-      event.preventDefault();
-      let inputEl = $('.search-input');
-      utilSearch(inputEl.val());
-      inputEl.val('');
-    })
+    // $('#getKanye').click(getKanye)
+    // $('#getJay').click(getJay)
+    // $('#getKanyeFriends').click(getKanyeFriends)
+
   </script>
 
   <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -296,6 +302,28 @@
     let ARTIST_INFO = '';
     let ARTIST_TRACKS = [];
 
+    $('.search-form').submit(function(event) {
+      event.preventDefault();
+      let inputEl = $('.search-input');
+      utilSearch(inputEl.val());
+      inputEl.val('');
+    })
+
+    $('.reset-button').click(function(e) {
+      NODES_OBJ = {};
+      LINKS_OBJ = {};
+      CHOSEN_ARR = [];
+      nodes = [];
+      links = [];
+      point = [0, 0];
+      ARTIST_INFO = '';
+      ARTIST_TRACKS = [];
+      $('.artist-info').empty();
+      $('.playlist-ul').empty();
+      $('.player-div').empty();
+      update();
+
+    })
 
     var svg = d3.select("svg"),
       width = +svg.attr("width"),
@@ -351,7 +379,6 @@
       d.fx = null;
       d.fy = null;
     }
-
 
     var g = svg.append("g"),
       link = g.append("g").attr("stroke", "#000000").attr("stroke-width", 1).selectAll(".link"),
@@ -419,7 +446,6 @@
 
         tracks.forEach((track, idx) => {
           if (idx === 0) {
-            console.log("WHAT");
             playlistUl.append(
               `<li class='playlist-li active'>
                 <a href="${track.preview_url}">
@@ -447,7 +473,6 @@
     }
 
     function initializePlayer() {
-      console.log('in init');
       let current = 0;
       let player = $('audio');
       let playlist = $('.playlist-ul');
