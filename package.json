@@ -10,7 +10,7 @@
     "intro.js": "^2.5.0",
     "jquery": "^3.2.1",
     "querystring": "~0.2.0",
-    "request": "~2.34.0",
+    "request": "~2.34.0"
   },
   "scripts": {
     "start": "node server.js"
@@ -18,5 +18,5 @@
   "main": "opus_server.js",
   "engines": {
     "node": "6.11.0"
-  },
+  }
 }
