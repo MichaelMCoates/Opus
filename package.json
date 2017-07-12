@@ -1,8 +1,8 @@
 {
-  "author": "Spotify",
-  "name": "web-api-auth-examples",
-  "description": "Basic examples of the Spotify authorization flows through OAuth 2",
-  "version": "0.0.1",
+  "author": "Michael Coates michaelmcoates@gmail.com",
+  "name": "Opus",
+  "description": "Artist-recommendation data visualization app built with the Spotify Web API and D3.js",
+  "version": "1.0.0",
   "dependencies": {
     "cookie-parser": "1.3.2",
     "d3": "^4.9.1",
@@ -11,10 +11,12 @@
     "jquery": "^3.2.1",
     "querystring": "~0.2.0",
     "request": "~2.34.0",
-    "spotify-web-api-node": "^2.4.0"
   },
   "scripts": {
     "start": "node server.js"
   },
-  "main": "index.js"
+  "main": "opus_server.js",
+  "engines": {
+    "node": "6.11.0"
+  },
 }
