@@ -110,7 +110,7 @@ input[type="submit"] {
   padding: 5px 15px;
   background-color: #ffffff;
   border: 1px solid #dddddd;
-  border-radius: 2px;
+  border-radius: 5px;
   -webkit-transition: width 0.5s ease-out;
   transition: width 0.5s ease-out;
 }
@@ -162,7 +162,7 @@ input[type="submit"] {
   font-size: 20px;
   padding: 4px;
   border: 1px solid #0e0e0e;
-  border-radius: 3px;
+  border-radius: 5px;
   /*text-shadow: -1px 1px 10px #505050;*/
   color: #0e0e0e;
 }
@@ -184,7 +184,7 @@ svg {
   padding: 7px 14px;
   left: 5vw;
   top: 10vh;
-  border-radius: 20px;
+  border-radius: 5px;
   border: 1px solid #0e0e0e;
   background: #FFD700;
   color: #0e0e0e;
@@ -222,6 +222,7 @@ svg {
 .artist-info > h1 {
   font-weight: 600;
   font-size: 16px;
+  border-bottom: 1px solid #0e0e0e;
 }
 
 .player-div {
