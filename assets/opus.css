@@ -68,7 +68,7 @@ input[type="submit"] {
 }
 
 .header-title {
-  font-size: 50px;
+  font-size: 55px;
   margin-right: 20px;
   font-weight: 100;
   /*text-shadow: -2px 2px 0px #505050;*/
@@ -104,7 +104,7 @@ input[type="submit"] {
   padding-left: 30px;
   width: 36vw;
   height: 35px;
-  font-size: 14px;
+  font-size: 15px;
   text-transform: capitalize;
   line-height: 20px;
   padding: 5px 15px;
@@ -159,6 +159,10 @@ input[type="submit"] {
 
 .about-me {
   cursor: pointer;
+  font-size: 20px;
+  padding: 4px;
+  border: 1px solid #0e0e0e;
+  border-radius: 3px;
   /*text-shadow: -1px 1px 10px #505050;*/
   color: #0e0e0e;
 }
@@ -181,6 +185,7 @@ svg {
   left: 5vw;
   top: 10vh;
   border-radius: 20px;
+  border: 1px solid #0e0e0e;
   background: #FFD700;
   color: #0e0e0e;
   /*text-shadow: -1px 1px 10px #505050;*/
@@ -243,7 +248,7 @@ audio {
 }
 
 .playlist-li > a {
-  font-weight: 300;
+  font-weight: 400;
 }
 
 .playlist-li > a.active {
