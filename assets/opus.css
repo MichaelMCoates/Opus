@@ -1,0 +1,268 @@
+
+html, body, header, nav, h1, h3, h4, h5, a,
+ul, li, strong, main, button, i,
+section, img, div, h2, p, form,
+fieldset, label, input, textarea,
+span, article, footer, time, small {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  font-family: 'Helvetica';
+  font-weight: bold;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  box-sizing: inherit;
+  background: transparent;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+input[type="password"],
+input[type="email"],
+input[type="text"],
+input[type="submit"],
+textarea,
+button {
+  /*
+  Get rid of native styling. Read more here:
+  http://css-tricks.com/almanac/properties/a/appearance/
+  */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+button,
+input[type="submit"] {
+  cursor: pointer;
+}
+
+/* Clearfix */
+
+.group:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.links line {
+  stroke: #999;
+  stroke-opacity: 0.6;
+}
+
+.nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.header-div {
+  width: 100vw;
+  background: #FFD700;
+    /*background: -webkit-linear-gradient(left top, red, yellow);
+    background: -o-linear-gradient(bottom right, red, yellow);
+    background: -moz-linear-gradient(bottom right, red, yellow);
+    background: linear-gradient(to right, #ffffff, #FFD700); */
+}
+
+.header-title {
+  font-size: 50px;
+  margin-right: 20px;
+  text-shadow: -2px 2px 0px #505050;
+  color: #FFD700;
+
+  /*background: linear-gradient(to bottom right, #0e0e0e, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;*/
+}
+
+.header-contents {
+  width: 90vw;
+  height: 7vh;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.header-logo {
+  height: 47px;
+  width: 47px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.search-div {
+  width: 54vw;
+}
+
+.search-form {
+}
+
+.search-input {
+  -webkit-appearance: none
+  margin-left: 30px;
+  padding-left: 30px;
+  width: 36vw;
+  height: 35px;
+  font-size: 14px;
+  text-transform: capitalize;
+  line-height: 20px;
+  padding: 5px 15px;
+  background-color: #ffffff;
+  border: 1px solid #dddddd;
+  border-radius: 2px;
+  -webkit-transition: width 0.5s ease-out;
+  transition: width 0.5s ease-out;
+}
+
+.search-input:focus {
+  width: 50vw;
+  border: 1px solid #2a2a2a;
+  outline: none;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+}
+
+.github-link {
+  cursor: pointer;
+  height: 100%;
+  width: auto;
+  height: 47px;
+  width: 47px;
+}
+
+.github-link-image {
+  height: 100%;
+  width: auto;
+}
+
+.linkedin-link {
+  cursor: pointer;
+  height: 90%;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 47px;
+  width: 47px;
+}
+
+.linkedin-link-image {
+  height: 72%;
+  width: auto;
+}
+
+.about-me {
+  cursor: pointer;
+  text-shadow: -1px 1px 1px #505050;
+  color: #FFD700;
+}
+
+.main-body {
+
+}
+
+.svg-div {
+  width: 99vw;
+  height: 75vh;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+}
+
+.artist-box {
+  margin: 0 auto;
+  width: 100vw;
+  background: #FFD700;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 17.3vh;
+  font-size: 14px;
+  padding-top: 5px;
+}
+
+.artist-info {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.player-div {
+}
+
+audio {
+  width: 100vw;
+}
+
+.playlist-div {
+}
+
+.playlist-ul {
+  -webkit-columns: 3 200px;
+     -moz-columns: 3 200px;
+          columns: 3 200px;
+  -webkit-column-gap: 4em;
+     -moz-column-gap: 4em;
+          column-gap: 4em;
+  -webkit-column-rule: 1px solid #0e0e0e;
+     -moz-column-rule: 1px solid #0e0e0e;
+          column-rule: 1px solid #0e0e0e;
+           text-align: center;
+}
+
+.playlist-li > a {
+  font-weight: normal;
+}
+
+.playlist-li > a.active {
+  font-weight: bold;
+}
+
+.reset-button {
+  position: fixed;
+  padding: 7px 14px;
+  left: 5vw;
+  top: 10vh;
+  border-radius: 20px;
+  background: #FFD700;
+  color: #0e0e0e;
+  text-shadow: -1px 1px 1px #505050;
+  color: #FFD700;
+}
+
+.tooltip {
+}
+
+.intro {
+  width: 25vw;
+}
+
+.introjs-tooltiptext {
+  text-align: center;
+  padding: 10px;
+}
