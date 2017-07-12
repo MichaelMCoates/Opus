@@ -55,5 +55,5 @@ app.get('/cors', function (req, res) {
 
 const port = (process.env.PORT || 8080);
 app.listen(port, function () {
-  console.log(`CORS demo listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });
