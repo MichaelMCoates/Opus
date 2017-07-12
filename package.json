@@ -13,7 +13,7 @@
     "request": "~2.34.0"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node opus_server.js"
   },
   "main": "opus_server.js",
   "engines": {
