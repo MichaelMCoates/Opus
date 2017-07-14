@@ -218,7 +218,7 @@ svg {
 .artist-box {
   margin: 0 auto;
   width: 20vw;
-  /*background: #f9f9f9;*/
+  background: rgba(249, 249, 249, 0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -229,7 +229,6 @@ svg {
   position: fixed;
   bottom: 0;
   right: 0;
-  opacity: 0.9;
 }
 
 .artist-info > h1 {
@@ -258,6 +257,11 @@ audio {
      -moz-column-rule: 1px solid #0e0e0e;
           column-rule: 1px solid #0e0e0e;
            text-align: center;
+           cursor: pointer;
+}
+
+.playlist-li {
+  cursor: pointer;
 }
 
 .playlist-li > a {
