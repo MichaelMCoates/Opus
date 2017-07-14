@@ -47,6 +47,10 @@ input[type="submit"] {
   cursor: pointer;
 }
 
+body {
+  background: #f9f9f9;
+}
+
 /* Clearfix */
 
 .group:after {
@@ -59,12 +63,15 @@ input[type="submit"] {
 
 .header-div {
   width: 100vw;
-  background: #f9f9f9;
+  /*background: #f9f9f9;*/
+  opacity: 0.9;
+  position: fixed;
 }
 
 .header-left {
   display: flex;
   align-items: center;
+  opacity: 1;
 }
 
 .header-title {
@@ -171,7 +178,7 @@ input[type="submit"] {
 
 .svg-div {
   width: 100vw;
-  height: 75vh;
+  height: 99vh;
 }
 
 svg {
@@ -187,6 +194,7 @@ svg {
   border-radius: 5px;
   border: 1px solid #0e0e0e;
   background: #ffffff;
+  opacity: 0.9;
   color: #0e0e0e;
   /*text-shadow: -1px 1px 10px #505050;*/
   /*color: #f9f9f9;*/
@@ -209,7 +217,7 @@ svg {
 .artist-box {
   margin: 0 auto;
   width: 100vw;
-  background: #f9f9f9;
+  /*background: #f9f9f9;*/
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -217,6 +225,9 @@ svg {
   height: 17.3vh;
   font-size: 14px;
   padding-top: 5px;
+  position: fixed;
+  bottom: 0;
+  opacity: 0.9;
 }
 
 .artist-info > h1 {
