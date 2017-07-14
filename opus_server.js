@@ -37,9 +37,6 @@ app.get('/cors', function (req, res) {
   const url = req.query.url;
 
   request.post(authOptions, (postErr, postResponse, tokenBody) => {
-      if (tokenBody === undefined) {
-        debugger;
-      }
       var token = tokenBody.access_token;
       var options = {
         url: url,
