@@ -166,12 +166,14 @@ body {
 
 .about-me {
   cursor: pointer;
-  font-size: 20px;
-  padding: 4px;
+  font-size: 16px;
+  padding: 7px 14px;;
   border: 1px solid #0e0e0e;
   border-radius: 5px;
   /*text-shadow: -1px 1px 10px #505050;*/
   color: #0e0e0e;
+  background: #ffffff;
+  opacity: 0.9;
 }
 
 /* Body */
