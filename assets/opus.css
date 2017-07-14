@@ -213,6 +213,20 @@ svg {
   stroke-width: 1.5px;
 }
 
+.node {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.image {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
 /* Artist Box/Player */
 
 .artist-box {
