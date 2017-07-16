@@ -245,10 +245,11 @@ svg {
   right: 0;
 }
 
-.artist-info > h1 {
+.artist-info > a > h1 {
   font-weight: 600;
   font-size: 16px;
   text-align: center;
+  cursor: pointer;
 }
 
 .player-div {
@@ -259,6 +260,7 @@ audio {
 }
 
 .playlist-div {
+  cursor: pointer;
 }
 
 .playlist-ul {
@@ -280,11 +282,8 @@ audio {
 }
 
 .playlist-li > a {
+  cursor: pointer;
   font-weight: 400;
-}
-
-.playlist-li > a.active {
-  font-weight: 600;
 }
 
 .next-button-div {
