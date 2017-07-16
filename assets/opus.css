@@ -300,6 +300,10 @@ audio {
 /* Intro.js */
 
 .tooltip {
+  /*opacity: 0;*/
+}
+.introjs-relativePosition {
+  /*position: inherit;*/
 }
 
 .intro {
@@ -309,4 +313,8 @@ audio {
 .introjs-tooltiptext {
   text-align: center;
   padding: 10px;
+}
+
+.introjs-helperLayer {
+  opacity: 0.3;
 }
