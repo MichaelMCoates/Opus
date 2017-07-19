@@ -227,6 +227,13 @@ svg {
   cursor: -webkit-grab;
 }
 
+rect {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
 /* Artist Box/Player */
 
 .artist-box {
