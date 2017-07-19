@@ -48,7 +48,7 @@ input[type="submit"] {
 }
 
 body {
-  background: #f9f9f9;
+  fill: #f9f9f9;
 }
 
 /* Clearfix */
@@ -322,9 +322,9 @@ audio {
   padding: 10px;
 }
 
-.introjs-helperLayer {
+/*.introjs-helperLayer {
   opacity: 0;
-}
+}*/
 
 /*.introjs-showElement {
   opacity: 0.7;
