@@ -316,5 +316,15 @@ audio {
 }
 
 .introjs-helperLayer {
-  opacity: 0.3;
+  opacity: 0;
 }
+
+/*.introjs-showElement {
+  opacity: 0.7;
+  z-index: 1000000000000 !important;
+}
+
+.introjs-fixParent {
+  opacity: 0.9;
+  z-index: 100000000000 !important;
+}*/
