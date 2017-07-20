@@ -252,18 +252,14 @@ rect {
 
 .artist-box {
   margin: 0 auto;
-  width: 20vw;
   background: rgba(249, 249, 249, 0.5);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 17.3vh;
   font-size: 14px;
   padding-top: 5px;
   position: fixed;
-  bottom: 0;
-  right: 0;
+  bottom: 25px;
+  right: 25px;
 }
 
 .artist-info > a > h1 {
@@ -276,41 +272,16 @@ rect {
 .player-div {
 }
 
-audio {
-  width: 20vw;
-}
-
-.playlist-div {
-  cursor: pointer;
-}
-
-.playlist-ul {
-  -webkit-columns: 3 200px;
-     -moz-columns: 3 200px;
-          columns: 3 200px;
-  -webkit-column-gap: 4em;
-     -moz-column-gap: 4em;
-          column-gap: 4em;
-  -webkit-column-rule: 1px solid #0e0e0e;
-     -moz-column-rule: 1px solid #0e0e0e;
-          column-rule: 1px solid #0e0e0e;
-           text-align: center;
-           cursor: pointer;
-}
-
-.playlist-li {
-  cursor: pointer;
-}
-
-.playlist-li > a {
-  cursor: pointer;
-  font-weight: 400;
-}
 
 .next-button-div {
-  cursor: pointer;
-  padding: 5px;
   /*margin-top: 5px;*/
+}
+
+.next-button-inside-div {
+  cursor: pointer;
+  padding: 20px;
+  height: 20px;
+  width: 20px;
 }
 
 .next-button {
