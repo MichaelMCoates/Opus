@@ -318,6 +318,10 @@ audio {
   fill: #0e0e0e;
 }
 
+.aplayer-time > .aplayer-icon-menu {
+  display: none !important;
+}
+
 /* Intro.js */
 
 .tooltip {
