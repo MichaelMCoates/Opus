@@ -201,6 +201,20 @@ svg {
   /*color: #f9f9f9;*/
 }
 
+.center-zoom-button {
+  position: fixed;
+  padding: 7px 14px;
+  left: 5vw;
+  top: 15vh;
+  border-radius: 5px;
+  border: 1px solid #0e0e0e;
+  background: #ffffff;
+  opacity: 0.9;
+  color: #0e0e0e;
+  /*text-shadow: -1px 1px 10px #505050;*/
+  /*color: #f9f9f9;*/
+}
+
 /* D3 */
 
 .links line {
