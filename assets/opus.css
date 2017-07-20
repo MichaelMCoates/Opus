@@ -63,7 +63,6 @@ body {
 
 .header-div {
   width: 100vw;
-  /*background: #f9f9f9;*/
   opacity: 0.9;
   position: fixed;
 }
@@ -78,7 +77,6 @@ body {
   font-size: 55px;
   margin-right: 20px;
   font-weight: 100;
-  /*text-shadow: -2px 2px 0px #505050;*/
   color: #0e0e0e;
 }
 
@@ -169,7 +167,6 @@ body {
   padding: 7px 14px;;
   border: 1px solid #0e0e0e;
   border-radius: 5px;
-  /*text-shadow: -1px 1px 10px #505050;*/
   color: #0e0e0e;
   background: #ffffff;
   opacity: 0.9;
@@ -197,8 +194,6 @@ svg {
   background: #ffffff;
   opacity: 0.9;
   color: #0e0e0e;
-  /*text-shadow: -1px 1px 10px #505050;*/
-  /*color: #f9f9f9;*/
 }
 
 .center-zoom-button {
@@ -211,8 +206,6 @@ svg {
   background: #ffffff;
   opacity: 0.9;
   color: #0e0e0e;
-  /*text-shadow: -1px 1px 10px #505050;*/
-  /*color: #f9f9f9;*/
 }
 
 /* D3 */
@@ -256,7 +249,6 @@ rect {
   display: flex;
   align-items: center;
   font-size: 14px;
-  padding-top: 5px;
   position: fixed;
   bottom: 25px;
   right: 25px;
@@ -269,14 +261,6 @@ rect {
   cursor: pointer;
 }
 
-.player-div {
-}
-
-
-.next-button-div {
-  /*margin-top: 5px;*/
-}
-
 .next-button-inside-div {
   cursor: pointer;
   padding: 20px;
@@ -285,7 +269,6 @@ rect {
 }
 
 .next-button {
-  /*cursor: pointer;*/
   fill: #0e0e0e;
 }
 
@@ -295,13 +278,6 @@ rect {
 
 /* Intro.js */
 
-.tooltip {
-  /*opacity: 0;*/
-}
-.introjs-relativePosition {
-  /*position: inherit;*/
-}
-
 .intro {
   width: 25vw;
 }
@@ -310,17 +286,3 @@ rect {
   text-align: center;
   padding: 10px;
 }
-
-/*.introjs-helperLayer {
-  opacity: 0;
-}*/
-
-/*.introjs-showElement {
-  opacity: 0.7;
-  z-index: 1000000000000 !important;
-}
-
-.introjs-fixParent {
-  opacity: 0.9;
-  z-index: 100000000000 !important;
-}*/
