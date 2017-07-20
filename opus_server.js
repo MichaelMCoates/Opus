@@ -14,6 +14,7 @@ app.get('/', function(req, res) {
 
 app.use('/lib', express.static(__dirname + '/lib'));
 app.use('/assets', express.static(__dirname + '/assets'));
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
 // Keys
 
