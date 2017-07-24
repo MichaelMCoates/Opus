@@ -276,6 +276,10 @@ rect {
   display: none !important;
 }
 
+.player-div {
+  width: 500px;
+}
+
 /* Intro.js */
 
 .intro {
