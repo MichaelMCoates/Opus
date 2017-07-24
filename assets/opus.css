@@ -81,7 +81,7 @@ body {
 }
 
 .header-contents {
-  width: 90vw;
+  width: 98vw;
   height: 7vh;
   margin: 0 auto;
   display: flex;
@@ -183,7 +183,7 @@ svg {
 .reset-button {
   position: fixed;
   padding: 7px 14px;
-  left: 5vw;
+  left: 1vw;
   top: 10vh;
   border-radius: 5px;
   border: 1px solid #0e0e0e;
@@ -195,7 +195,7 @@ svg {
 .center-zoom-button {
   position: fixed;
   padding: 7px 14px;
-  left: 5vw;
+  left: 1vw;
   top: 15vh;
   border-radius: 5px;
   border: 1px solid #0e0e0e;
@@ -217,24 +217,16 @@ svg {
 }
 
 .node {
-  cursor: move;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
+  cursor: pointer;
 }
 
 .image {
-  cursor: move;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
+  cursor: pointer;
 }
 
 rect {
   cursor: move;
-  cursor: grab;
-  cursor: -moz-grab;
-  cursor: -webkit-grab;
+  z-index: 1;
 }
 
 /* Artist Box/Player */
@@ -246,8 +238,8 @@ rect {
   align-items: center;
   font-size: 14px;
   position: fixed;
-  bottom: 25px;
-  right: 25px;
+  bottom: 1vh;
+  right: 1vw;
 }
 
 .artist-info > a > h1 {
@@ -273,7 +265,84 @@ rect {
 }
 
 .player-div {
-  width: 500px;
+  width: 400px;
+}
+
+
+/* Directions */
+
+.directions-box {
+  opacity: 0.5;
+  z-index: 0;
+  position: fixed;
+  top: 10vh;
+  right: 1vw;
+  background: rgba(249, 249, 249, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 14px;
+}
+
+.drag, .click, .zoom {
+  display: flex;
+  align-items: center;
+  padding: 1px;
+}
+
+.drag-text, .click-text, .zoom-text {
+  padding: 5px;
+}
+
+.drag-img, .click-img {
+  height: 21px;
+  width: auto;
+}
+
+.mouse {
+  height: 21px;
+  width: 14px;
+  border-radius: 10px;
+  transform: none;
+  border: 1px solid #0e0e0e;
+  top: 170px;
+  margin-left: 5px;
+}
+
+.wheel {
+  height: 5px;
+  width: 2px;
+  display: block;
+  margin: 5px auto;
+  background: #0e0e0e;
+  position: relative;
+}
+
+.wheel {
+  -webkit-animation: mouse-wheel 1.2s ease infinite;
+  -moz-animation: mouse-wheel 1.2s ease infinite;
+}
+
+@-webkit-keyframes mouse-wheel {
+  0% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: translateY(6px);
+    -ms-transform: translateY(6px);
+    transform: translateY(6px);
+  }
+}
+
+@-moz-keyframes mouse-wheel {
+  0% { top: 1px; }
+  50% { top: 2px; }
+  100% { top: 3px; }
 }
 
 /* Intro.js */
