@@ -134,37 +134,33 @@ body {
 
 .github-link {
   cursor: pointer;
-  height: 100%;
-  width: auto;
   height: 47px;
-  width: 47px;
+  width: auto;
+  margin-right: 5px;
 }
 
 .github-link-image {
   height: 100%;
   width: auto;
+  border-radius: 4px;
 }
 
 .linkedin-link {
   cursor: pointer;
-  height: 90%;
-  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 47px;
-  width: 47px;
 }
 
 .linkedin-link-image {
-  height: 72%;
+  height: 47px;
   width: auto;
 }
 
 .about-me {
   cursor: pointer;
   font-size: 16px;
-  padding: 7px 14px;;
+  padding: 13px 14px;
   border: 1px solid #0e0e0e;
   border-radius: 5px;
   color: #0e0e0e;
