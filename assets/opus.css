@@ -184,7 +184,7 @@ svg {
   position: fixed;
   padding: 7px 14px;
   left: 1vw;
-  top: 10vh;
+  top: 15vh;
   border-radius: 5px;
   border: 1px solid #0e0e0e;
   background: #ffffff;
@@ -196,7 +196,19 @@ svg {
   position: fixed;
   padding: 7px 14px;
   left: 1vw;
-  top: 15vh;
+  top: 10vh;
+  border-radius: 5px;
+  border: 1px solid #0e0e0e;
+  background: #ffffff;
+  opacity: 0.9;
+  color: #0e0e0e;
+}
+
+.tour-button {
+  position: fixed;
+  padding: 7px 14px;
+  left: 1vw;
+  top: 20vh;
   border-radius: 5px;
   border: 1px solid #0e0e0e;
   background: #ffffff;
