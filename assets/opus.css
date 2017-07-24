@@ -241,7 +241,7 @@ rect {
 
 .artist-box {
   margin: 0 auto;
-  background: rgba(249, 249, 249, 0.5);
+  background: rgba(249, 249, 249, 0.9);
   display: flex;
   align-items: center;
   font-size: 14px;
