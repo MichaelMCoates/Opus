@@ -47,7 +47,8 @@ tr.introjs-showElement > th {
 .introjs-relativePosition,
 tr.introjs-showElement > td,
 tr.introjs-showElement > th {
-  /*position: relative;*/
+  position: relative;
+  opacity: 0.8;
 }
 
 .introjs-helperLayer {
