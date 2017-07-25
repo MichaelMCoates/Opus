@@ -38,6 +38,25 @@ app.get('/cors', function (req, res) {
   const url = req.query.url;
 
   request.post(authOptions, (postErr, postResponse, tokenBody) => {
+    if (tokenBody.error) {
+      console.log("in error");
+      console.log("postErr");
+      console.log(postErr);
+      console.log("postResponse");
+      console.log(postResponse);
+      console.log("tokenBody");
+      console.log(tokenBody);
+      console.log("in error");
+      res.status(422).send(`Error with token! Try again!`);
+    } else {
+      console.log("in else");
+      console.log("postErr");
+      console.log(postErr);
+      console.log("postResponse");
+      console.log(postResponse);
+      console.log("tokenBody");
+      console.log(tokenBody);
+      console.log("in else");
       var token = tokenBody.access_token;
       var options = {
         url: url,
@@ -48,6 +67,7 @@ app.get('/cors', function (req, res) {
       request.get(options, (getErr, getRes, getBody) => {
         res.send(getBody);
       });
+    }
   });
 });
 
