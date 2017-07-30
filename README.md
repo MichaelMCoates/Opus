@@ -1,4 +1,4 @@
-# Greenhouse
+# Opus
 
 [Opus Live Link][heroku]
 
@@ -76,6 +76,7 @@ Playback is controlled at the bottom right.
   <img src="./docs/images/playback.gif">
 </div>
 
+<br>
 <br>
 
 # Upcoming Features
