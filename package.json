@@ -1,7 +1,7 @@
 {
   "author": "Michael Coates michaelmcoates@gmail.com",
   "name": "Opus",
-  "description": "Artist-recommendation data visualization app built with the Spotify Web API and D3.js",
+  "description": "Artist-discovery data-visualization app built with the Spotify Web API and D3.js",
   "version": "1.0.0",
   "dependencies": {
     "aplayer": "^1.6.0",
