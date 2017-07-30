@@ -22,6 +22,8 @@ Opus uses the following libraries, languages, technologies, and frameworks:
   * Intro.js
   * Request
 
+<br>
+
 # How To Use Opus
 
 ## Artist Selection
