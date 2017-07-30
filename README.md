@@ -36,7 +36,7 @@ The user will typically start by typing in an artist using the search bar on the
 
 <br>
 
-Once there are artists on the page, the user can then simply click on any artist on the page to fetch related artists and songs for that artist.
+Once there are artists on the page, the user can then simply click on any artist on the page to fetch related artists and songs for that artist. The user can do this as much as they'd like.
 
 <div align="center">
   <img src="./docs/images/artist_click.gif">
@@ -44,7 +44,17 @@ Once there are artists on the page, the user can then simply click on any artist
 
 <br>
 
+### Force Graph Manipulation
 
+The user can zoom in and zoom out using the scrollwheel. The user can also drag the graph back and forth by clicking and dragging the background. The user can drag the artists around as well.
+
+<div align="center">
+  <img src="./docs/images/manipulation.gif">
+</div>
+
+<br>
+
+If the user 
 
 
 ## Upcoming Features
