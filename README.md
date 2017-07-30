@@ -30,7 +30,7 @@ The user can select an artist in two different ways.
 
 The user will typically start by typing in an artist using the search bar on the top of the page. This will send an AJAX request to the Spotify API's Search endpoint, and return an array of artists to Opus. Opus will take the top result of that search and display it on the page with a yellow border. If there are other artists already on the page with a yellow border, Opus will make a connection between the newly fetched artist and those artists.
 
-<div style='position:relative;padding-bottom:54%'><iframe src='https://gfycat.com/ifr/TotalSophisticatedHamadryad' frameborder='0' scrolling='no' width='100%' height='100%' style='position:absolute;top:0;left:0' allowfullscreen></iframe></div>
+![Artist Search](https://thumbs.gfycat.com/TotalSophisticatedHamadryad-size_restricted.gif)
 
 
 
