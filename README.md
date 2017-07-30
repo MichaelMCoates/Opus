@@ -28,11 +28,21 @@ Opus uses the following libraries, languages, technologies, and frameworks:
 
 The user can select an artist in two different ways.
 
-The user will typically start by typing in an artist using the search bar on the top of the page. This will send an AJAX request to the Spotify API's Search endpoint, and return an array of artists to Opus. Opus will take the top result of that search and display it on the page with a yellow border. If there are other artists already on the page with a yellow border, Opus will make a connection between the newly fetched artist and those artists.
+The user will typically start by typing in an artist using the search bar on the top of the page. This will send an AJAX request to the Spotify API's Search endpoint, and return an array of artists to Opus. Opus will take the top artist of that search and display it on the page with a yellow border. If there are other artists already on the page with a yellow border, Opus will make a connection between the newly fetched artist and those artists.
 
 <div align="center">
-  <img src="https://thumbs.gfycat.com/TotalSophisticatedHamadryad-size_restricted.gif">
+  <img src="./docs/images/artist_search.gif">
 </div>
+
+<br>
+
+Once there are artists on the page, the user can then simply click on any artist on the page to fetch related artists and songs for that artist.
+
+<div align="center">
+  <img src="./docs/images/artist_click.gif">
+</div>
+
+<br>
 
 
 
