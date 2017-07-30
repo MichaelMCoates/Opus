@@ -46,7 +46,7 @@ Once there are artists on the page, the user can then simply click on any artist
 
 ### Force Graph Manipulation
 
-The user can zoom in and zoom out using the scrollwheel. The user can also drag the graph back and forth by clicking and dragging the background. The user can drag the artists around as well.
+The user can zoom in and zoom out using the scrollwheel, and move the graph back and forth by clicking and dragging the background. The user can drag the artists around as well.
 
 <div align="center">
   <img src="./docs/images/manipulation.gif">
@@ -54,7 +54,15 @@ The user can zoom in and zoom out using the scrollwheel. The user can also drag 
 
 <br>
 
-If the user 
+If the graph grows too large, the user zooms too far in or out, or the graph goes off of the page, the user can reset the view using the Center button.
+
+<div align="center">
+  <img src="./docs/images/center.gif">
+</div>
+
+<br>
+
+If the user wants to start over, they can press the Reset button.
 
 
 ## Upcoming Features
