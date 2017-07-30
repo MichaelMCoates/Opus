@@ -24,7 +24,7 @@ Opus uses the following libraries, languages, technologies, and frameworks:
 
 # How To Use Opus
 
-### Artist Selection
+## Artist Selection
 
 The user can select an artist in two different ways.
 
@@ -44,7 +44,7 @@ Once there are artists on the page, the user can then simply click on any artist
 
 <br>
 
-### Force Graph Manipulation
+## Force Graph Manipulation
 
 The user can zoom in and zoom out using the scrollwheel, and move the graph back and forth by clicking and dragging the background. The user can drag the artists around as well.
 
@@ -66,7 +66,7 @@ If the user wants to start over, they can press the Reset button.
 
 <br>
 
-### Playback
+## Playback
 
 Playback is controlled at the bottom right.
 
@@ -76,7 +76,7 @@ Playback is controlled at the bottom right.
 
 <br>
 
-## Upcoming Features
+# Upcoming Features
 
 There is still work to be done on Opus. The following is a list of features that still need implementation:
 
