@@ -89,4 +89,5 @@ There is still work to be done on Opus. The following is a list of features that
 * Generating playlist with saved artists
 * Volume control
 * Mute button
-* Graph saving
+* Graph save
+* Node deletion
