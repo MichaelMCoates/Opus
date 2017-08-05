@@ -6,7 +6,7 @@
 
 ## Summary
 
-Opus is an artist-exploration data-visualization application, built with the Spotify Web API and D3.js. Opus is built to help the user find their next favorite artist. First, the user chooses an artist. Opus then fetches that artist, that artist's top songs, and that artist's related artists from Spotify. It visualizes that data on the page with D3, and lets the user continue exploring by clicking on other artists. Have fun with it! Select artists you like and see what artists they all connect to. Select two artists that don't connect at all and try to find a connection between their related artists.
+Opus is an artist-exploration data visualization application, built with the Spotify Web API and D3.js. Opus is built to help the user find their next favorite artist. First, the user chooses an artist. Opus then fetches that artist, that artist's top songs, and that artist's related artists from Spotify. It visualizes that data on the page with D3, and lets the user continue exploring by clicking on other artists. Have fun with it! Select artists you like and see what artists they all connect to. Select two artists that don't connect at all and try to find a connection between their related artists.
 
 ![Full Page](./docs/images/full_page.png)
 
@@ -89,4 +89,5 @@ There is still work to be done on Opus. The following is a list of features that
 * Generating playlist with saved artists
 * Volume control
 * Mute button
-* Graph saving
+* Graph save
+* Node deletion
