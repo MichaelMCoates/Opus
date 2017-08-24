@@ -298,17 +298,14 @@ rect {
   color: #0e0e0e;
 }
 
-.aplayer-title > a {
-}
-
 .aplayer-music {
   padding-right: 2vw;
 }
 
 .logo {
-  width: 20px;
-  height: 20px;
-  margin-right: 5px;
+  width: 21px;
+  height: 21px;
+  margin-right: 11px;
   display: inline;
   vertical-align: middle;
 }
