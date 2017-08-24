@@ -284,17 +284,34 @@ rect {
 
 .player-div {
   width: 400px;
+  position: relative;
 }
 
 .aplayer-title > a,
 .aplayer-author > a {
   cursor: pointer !important;
+  color: #1ED760;
+}
+
+.aplayer-title > a:hover,
+.aplayer-author > a:hover {
+  color: #0e0e0e;
+}
+
+.aplayer-title > a {
 }
 
 .aplayer-music {
   padding-right: 2vw;
 }
 
+.logo {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  display: inline;
+  vertical-align: middle;
+}
 
 /* Directions */
 
