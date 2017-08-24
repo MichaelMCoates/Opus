@@ -261,6 +261,12 @@ rect {
   cursor: pointer;
 }
 
+.next-button-div {
+  position: fixed;
+  bottom: 3.5vh;
+  right: 0.5vw;
+}
+
 .next-button-inside-div {
   cursor: pointer;
   padding: 20px;
@@ -283,6 +289,10 @@ rect {
 .aplayer-title > a,
 .aplayer-author > a {
   cursor: pointer !important;
+}
+
+.aplayer-music {
+  padding-right: 2vw;
 }
 
 
