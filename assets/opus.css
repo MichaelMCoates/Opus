@@ -51,6 +51,10 @@ body {
   fill: #f9f9f9;
 }
 
+button {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.18)
+}
+
 /* Clearfix */
 
 .group:after {
