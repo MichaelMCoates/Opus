@@ -184,18 +184,6 @@ svg {
   height: 100%;
 }
 
-.reset-button {
-  position: fixed;
-  padding: 7px 14px;
-  left: 1vw;
-  top: 15vh;
-  border-radius: 5px;
-  border: 1px solid #0e0e0e;
-  background: #ffffff;
-  opacity: 0.9;
-  color: #0e0e0e;
-}
-
 .center-zoom-button {
   position: fixed;
   padding: 7px 14px;
@@ -208,11 +196,23 @@ svg {
   color: #0e0e0e;
 }
 
+.reset-button {
+  position: fixed;
+  padding: 7px 14px;
+  left: 1vw;
+  top: 17vh;
+  border-radius: 5px;
+  border: 1px solid #0e0e0e;
+  background: #ffffff;
+  opacity: 0.9;
+  color: #0e0e0e;
+}
+
 .tour-button {
   position: fixed;
   padding: 7px 14px;
   left: 1vw;
-  top: 20vh;
+  top: 24vh;
   border-radius: 5px;
   border: 1px solid #0e0e0e;
   background: #ffffff;
