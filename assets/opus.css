@@ -108,6 +108,7 @@ button {
 }
 
 .search-input {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.10);
   -webkit-appearance: none
   margin-left: 30px;
   padding-left: 30px;
