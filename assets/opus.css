@@ -104,9 +104,6 @@ button {
   width: 54vw;
 }
 
-.search-form {
-}
-
 .search-input {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.10);
   -webkit-appearance: none
@@ -195,6 +192,11 @@ svg {
   background: #ffffff;
   opacity: 0.9;
   color: #0e0e0e;
+  transition: transform 0.2s;
+}
+
+.center-zoom-button:hover {
+  transform: translate(-1px, -1px);
 }
 
 .reset-button {
@@ -207,6 +209,11 @@ svg {
   background: #ffffff;
   opacity: 0.9;
   color: #0e0e0e;
+  transition: transform 0.2s;
+}
+
+.reset-button:hover {
+  transform: translate(-1px, -1px);
 }
 
 .tour-button {
@@ -219,6 +226,11 @@ svg {
   background: #ffffff;
   opacity: 0.9;
   color: #0e0e0e;
+  transition: transform 0.2s;
+}
+
+.tour-button:hover {
+  transform: translate(-1px, -1px);
 }
 
 /* D3 */
