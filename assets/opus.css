@@ -31,6 +31,10 @@ img {
   height: auto;
 }
 
+image {
+  transition: transform 0.1s ease-in-out;
+}
+
 input[type="password"],
 input[type="email"],
 input[type="text"],
