@@ -18,6 +18,6 @@
   },
   "main": "opus_server.js",
   "engines": {
-    "node": "6.11.0"
+    "node": "6.11.1"
   }
 }
