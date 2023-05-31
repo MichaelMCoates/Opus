@@ -110,7 +110,7 @@ button {
 
 .search-input {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.10);
-  -webkit-appearance: none
+  -webkit-appearance: none;
   margin-left: 30px;
   padding-left: 30px;
   width: 50vw;
@@ -285,7 +285,7 @@ rect {
 
 .next-button-div {
   position: fixed;
-  bottom: 3.5vh;
+  bottom: calc(1vh + 24px);
   right: 0.5vw;
 }
 
